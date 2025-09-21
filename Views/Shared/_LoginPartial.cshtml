@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
+    var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+}
+
+@if (userId.HasValue)
+{
+    <div class="d-flex align-items-center">
+        <span class="me-3">Hello, @userName!</span>
+        <form asp-controller="Account" asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-outline-secondary">Logout</button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="d-flex">
+        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary me-2">Login</a>
+        <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Sign Up</a>
+    </div>
+}

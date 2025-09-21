@@ -1,0 +1,75 @@
+@model EquipShare.Models.Equipment
+
+@{
+    ViewData["Title"] = "Delete Equipment";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-exclamation-triangle"></i> Confirm Deletion
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-trash display-4 text-danger mb-3"></i>
+                        <h5>Are you sure you want to delete this equipment?</h5>
+                        <p class="text-muted">This action cannot be undone.</p>
+                    </div>
+
+                    <div class="card bg-light mb-4">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start">
+                                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                                {
+                                    <img src="@Model.ImageUrl" class="me-3 rounded"
+                                         alt="@Model.Name" style="width: 60px; height: 60px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="me-3 bg-light rounded d-flex align-items-center justify-content-center"
+                                         style="width: 60px; height: 60px;">
+                                        <i class="bi bi-image text-muted"></i>
+                                    </div>
+                                }
+                                <div>
+                                    <h6 class="mb-1">@Model.Name</h6>
+                                    <p class="text-muted small mb-1">@Model.Category?.Name</p>
+                                    <p class="text-primary mb-0">₹@Model.PricePerDay.ToString("F2") per day</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <i class="bi bi-info-circle"></i>
+                        <strong>What will happen:</strong>
+                        <ul class="mb-0 mt-2">
+                            <li>This equipment will be permanently removed from your listings</li>
+                            <li>Any associated image files will be deleted</li>
+                            <li>Future booking requests for this equipment will not be possible</li>
+                            <li>This action cannot be reversed</li>
+                        </ul>
+                    </div>
+
+                    <form asp-action="Delete" method="post" class="d-inline">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" name="confirmDelete" value="Yes" />
+
+                        <div class="d-flex gap-2 justify-content-center">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Yes, Delete Equipment
+                            </button>
+                            <a asp-controller="Equipment" asp-action="MyEquipment" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

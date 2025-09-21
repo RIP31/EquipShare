@@ -1,0 +1,176 @@
+@model EquipShare.Models.ViewModels.BookingCreateModel
+
+@{
+    ViewData["Title"] = "Create Booking";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="bi bi-calendar-plus"></i> Book Equipment
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <!-- Preserve EquipmentId in POST request -->
+                        <input type="hidden" name="EquipmentId" value="@Model.EquipmentId" id="bookingEquipmentId">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- Equipment Info Display -->
+                        <div class="alert alert-info">
+                            <div class="d-flex align-items-start">
+                                @if (!string.IsNullOrEmpty(ViewBag.EquipmentImage))
+                                {
+                                    <img src="@ViewBag.EquipmentImage" class="me-3 rounded"
+                                         alt="@ViewBag.EquipmentName" style="width: 60px; height: 60px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="me-3 bg-light rounded d-flex align-items-center justify-content-center"
+                                         style="width: 60px; height: 60px;">
+                                        <i class="bi bi-image text-muted"></i>
+                                    </div>
+                                }
+                                <div>
+                                    <h5 class="mb-1">@(ViewBag.EquipmentName ?? "Equipment Details")</h5>
+                                    @if (ViewBag.PricePerDay != null)
+                                    {
+                                        <p class="mb-1">Price: <strong>₹@ViewBag.PricePerDay.ToString("F2")</strong> per day</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="mb-1 text-danger">Unable to load equipment details</p>
+                                    }
+                                    <small class="text-muted">Select your rental dates below</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="StartDate" class="form-label">Start Date *</label>
+                                <input asp-for="StartDate" class="form-control" type="date"
+                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="EndDate" class="form-label">End Date *</label>
+                                <input asp-for="EndDate" class="form-control" type="date"
+                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Price Calculation Display -->
+                        <div class="card bg-light mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Price Calculation</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="d-flex justify-content-between">
+                                            <span>Price per day:</span>
+                                            @if (ViewBag.PricePerDay != null)
+                                            {
+                                                <span>₹@ViewBag.PricePerDay.ToString("F2")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-danger">N/A</span>
+                                            }
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Number of days:</span>
+                                            <span id="totalDays">@Model.TotalDays</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="d-flex justify-content-between border-top pt-2">
+                                            <strong>Total Amount:</strong>
+                                            <strong class="text-primary" id="totalPrice">₹@Model.TotalPrice.ToString("F2")</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <strong>Important:</strong>
+                            <ul class="mb-0 mt-2">
+                                <li>Bookings are subject to owner approval</li>
+                                <li>Contact the owner to arrange pickup and return</li>
+                                <li>Return equipment in the same condition as received</li>
+                                <li>Late returns may incur additional charges</li>
+                            </ul>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary" onclick="return validateBookingSubmission();">
+                                <i class="bi bi-check2"></i> Request Booking
+                            </button>
+                            <a asp-controller="Equipment" asp-action="Details" asp-route-id="@Model.EquipmentId"
+                               class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to Equipment
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Calculate total price when dates change
+        function calculateTotal() {
+            const startDate = new Date(document.getElementById('StartDate').value);
+            const endDate = new Date(document.getElementById('EndDate').value);
+            const pricePerDay = @(ViewBag.PricePerDay ?? 0);
+
+            if (startDate && endDate && startDate <= endDate) {
+                const timeDiff = endDate.getTime() - startDate.getTime();
+                const days = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
+                const total = days * pricePerDay;
+
+                document.getElementById('totalDays').textContent = days;
+                document.getElementById('totalPrice').textContent = '₹' + total.toFixed(2);
+            }
+        }
+
+        // Add event listeners to date inputs
+        document.getElementById('StartDate').addEventListener('change', calculateTotal);
+        document.getElementById('EndDate').addEventListener('change', calculateTotal);
+
+        // Validation function for booking submission
+        function validateBookingSubmission() {
+            const equipmentIdInput = document.getElementById('bookingEquipmentId');
+            const equipmentId = equipmentIdInput ? equipmentIdInput.value : 0;
+
+            if (!equipmentId || equipmentId <= 0) {
+                alert('Error: Invalid equipment selected. Please go back and try again.');
+                return false;
+            }
+
+            // Validate dates
+            const startDate = new Date(document.getElementById('StartDate').value);
+            const endDate = new Date(document.getElementById('EndDate').value);
+
+            if (!startDate || !endDate) {
+                alert('Please select both start and end dates.');
+                return false;
+            }
+
+            if (startDate >= endDate) {
+                alert('End date must be after start date.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+}

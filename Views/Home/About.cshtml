@@ -1,0 +1,99 @@
+@{
+    ViewData["Title"] = "How It Works";
+}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h1 class="display-4">How EquipShare Works</h1>
+            <p class="lead">Connect with equipment owners and renters in your community</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-plus-circle display-4 text-primary"></i>
+                    </div>
+                    <h5 class="card-title">1. List Your Equipment</h5>
+                    <p class="card-text">Equipment owners can easily list their tools, machinery, and equipment for rent. Set your own prices and availability.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-search display-4 text-success"></i>
+                    </div>
+                    <h5 class="card-title">2. Browse & Book</h5>
+                    <p class="card-text">Renters can search for equipment by category, location, and availability. Book instantly with our easy-to-use platform.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-check-circle display-4 text-info"></i>
+                    </div>
+                    <h5 class="card-title">3. Pick Up & Return</h5>
+                    <p class="card-text">Arrange pickup and return times that work for both parties. Leave reviews to help build trust in the community.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <h2>Why Choose EquipShare?</h2>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-3">
+        <div class="col-md-3">
+            <div class="text-center">
+                <i class="bi bi-shield-check display-5 text-success mb-3"></i>
+                <h6>Secure & Safe</h6>
+                <p class="small text-muted">Verified users and secure payment processing</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="text-center">
+                <i class="bi bi-currency-dollar display-5 text-warning mb-3"></i>
+                <h6>Affordable</h6>
+                <p class="small text-muted">Save money by renting instead of buying</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="text-center">
+                <i class="bi bi-people display-5 text-info mb-3"></i>
+                <h6>Community</h6>
+                <p class="small text-muted">Connect with neighbors and local businesses</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="text-center">
+                <i class="bi bi-star display-5 text-primary mb-3"></i>
+                <h6>Quality Equipment</h6>
+                <p class="small text-muted">Well-maintained tools and machinery</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <h3>Ready to Get Started?</h3>
+            <p class="mb-4">Join thousands of users already sharing equipment in their community</p>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg me-3">Get Started</a>
+            <a asp-controller="Equipment" asp-action="Index" class="btn btn-outline-primary btn-lg">Browse Equipment</a>
+        </div>
+    </div>
+</div>

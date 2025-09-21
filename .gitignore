@@ -1,0 +1,37 @@
+# .NET
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.log
+*.svclog
+*.scc
+
+# Visual Studio
+.vs/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files (uncomment if you have sensitive data)
+# appsettings.Development.json

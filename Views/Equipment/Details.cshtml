@@ -1,0 +1,119 @@
+﻿@model EquipShare.Models.Equipment
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="equipment-gallery">
+                <img id="main-gallery-image" src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded-3 mb-3" style="width: 100%; height: 400px; object-fit: cover;">
+                <div class="d-flex gap-2">
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="gallery-thumbnail active" style="width: 80px; height: 80px; object-fit: cover;">
+                    <!-- Additional images would go here -->
+                </div>
+            </div>
+
+            <div class="equipment-details-section">
+                <h2>@Model.Name</h2>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="price-tag">@Model.PricePerDay.ToString("C")/day</span>
+                    <span class="badge @(Model.IsAvailable ? "bg-success" : "bg-danger")">
+                        @(Model.IsAvailable ? "Available" : "Unavailable")
+                    </span>
+                </div>
+
+                <p class="text-muted">@Model.Description</p>
+
+                <div class="equipment-specs">
+                    <div class="spec-item">
+                        <i class="bi bi-grid spec-icon"></i>
+                        <span>@Model.Category.Name</span>
+                    </div>
+                    <div class="spec-item">
+                        <i class="bi bi-person spec-icon"></i>
+                        <span>Owner: @Model.Owner.FirstName @Model.Owner.LastName</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="sticky-top" style="top: 100px;">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Book This Equipment</h5>
+
+
+                        <hr>
+
+                        <form asp-controller="Booking" asp-action="Create" method="get">
+                            <input type="hidden" name="equipmentId" value="@Model.Id" id="equipmentIdInput">
+                            <div class="mb-3">
+                                <label class="form-label">Start Date</label>
+                                <input type="date" name="startDate" class="form-control" required min="@DateTime.Today.ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">End Date</label>
+                                <input type="date" name="endDate" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" @(!Model.IsAvailable ? "disabled" : "") onclick="return validateBookingForm();">
+                                @(Model.IsAvailable ? "Book Now" : "Not Available")
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h6>Owner Information</h6>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <span class="text-white">@Model.Owner.FirstName[0]@Model.Owner.LastName[0]</span>
+                            </div>
+                            <div>
+                                <strong>@Model.Owner.FirstName @Model.Owner.LastName</strong>
+                                <br>
+                                <small class="text-muted">Member since @Model.Owner.CreatedDate.ToString("yyyy")</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/equipment.js"></script>
+    <script>
+        function validateBookingForm() {
+            const equipmentIdInput = document.getElementById('equipmentIdInput');
+            const equipmentId = equipmentIdInput ? equipmentIdInput.value : 0;
+
+            if (!equipmentId || equipmentId <= 0) {
+                alert('Error: Invalid equipment selected. Please refresh the page and try again.');
+                return false;
+            }
+
+            // Validate dates
+            const startDate = new Date(document.querySelector('input[name="startDate"]').value);
+            const endDate = new Date(document.querySelector('input[name="endDate"]').value);
+
+            if (!startDate || !endDate) {
+                alert('Please select both start and end dates.');
+                return false;
+            }
+
+            if (startDate >= endDate) {
+                alert('End date must be after start date.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+}

@@ -1,0 +1,246 @@
+﻿/* Equipment-specific styles */
+.equipment-gallery {
+    margin-bottom: 2rem;
+}
+
+.gallery-thumbnail {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+    .gallery-thumbnail:hover,
+    .gallery-thumbnail.active {
+        border-color: var(--primary);
+        transform: scale(1.05);
+    }
+
+.rating-star {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+    .rating-star:hover {
+        color: #ffc107 !important;
+    }
+
+.wishlist-btn {
+    transition: all 0.3s ease;
+}
+
+    .wishlist-btn.active {
+        background-color: var(--danger);
+        border-color: var(--danger);
+    }
+
+    .wishlist-btn:hover:not(.active) {
+        background-color: #ff5a5f;
+        border-color: #ff5a5f;
+    }
+
+.share-btn {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+    .share-btn:hover {
+        background-color: #e0005f;
+        border-color: #e0005f;
+    }
+
+/* Filter sidebar */
+.filter-sidebar {
+    position: sticky;
+    top: 100px;
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+    height: fit-content;
+}
+
+.price-range {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+/* Comparison modal */
+.comparison-table th {
+    background-color: var(--light);
+    font-weight: 600;
+}
+
+/* Availability calendar */
+#availability-calendar {
+    max-width: 100%;
+    margin: 1rem 0;
+}
+
+/* Map container */
+#equipment-map {
+    height: 300px;
+    border-radius: 1rem;
+    margin: 1rem 0;
+}
+
+/* Responsive equipment grid */
+@media (max-width: 768px) {
+    .equipment-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-sidebar {
+        position: static;
+        margin-bottom: 2rem;
+    }
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Animation for equipment cards */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.equipment-card:hover {
+    animation: pulse 0.5s ease;
+}
+
+/* Badge styles */
+.equipment-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 10;
+}
+
+/* Equipment status indicators */
+.status-available {
+    color: var(--success);
+}
+
+.status-unavailable {
+    color: var(--danger);
+}
+
+.status-pending {
+    color: var(--warning);
+}
+
+/* Equipment action buttons */
+.equipment-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+    .equipment-actions .btn {
+        flex: 1;
+    }
+
+/* Equipment details section */
+.equipment-details-section {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+}
+
+.equipment-specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.spec-icon {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+/* ... existing code ... */
+
+.review-header {
+    display: flex;
+    justify-content: space-between; /* Fixed from "between" to "space-between" */
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* ... rest of the CSS ... */
+
+/* Equipment reviews */
+.review-card {
+    border-left: 4px solid var(--primary);
+    background: var(--light);
+}
+
+.review-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.review-author {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.review-date {
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+
+.review-header {
+    display: flex;
+    justify-content: space-between; /* Fixed from "between" to "space-between" */
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+
+
+/* Equipment booking form */
+.booking-summary {
+    background: var(--light);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.booking-detail {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+}
+
+.booking-total {
+    border-top: 2px solid var(--primary);
+    padding-top: 1rem;
+    margin-top: 1rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+}

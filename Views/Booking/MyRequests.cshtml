@@ -1,0 +1,228 @@
+@model IEnumerable<EquipShare.Models.Booking>
+
+@{
+    ViewData["Title"] = "Booking Requests";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Booking Requests</h2>
+            <p class="text-muted mb-0">Manage requests for your equipment</p>
+        </div>
+        <a asp-controller="Equipment" asp-action="MyEquipment" class="btn btn-outline-primary">
+            <i class="bi bi-tools"></i> My Equipment
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-4">
+            @foreach (var booking in Model)
+            {
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    @if (!string.IsNullOrEmpty(booking.Equipment?.ImageUrl))
+                                    {
+                                        <img src="@booking.Equipment.ImageUrl" class="img-fluid rounded"
+                                             alt="@booking.Equipment.Name" style="height: 80px; object-fit: cover;">
+                                    }
+                                    else
+                                    {
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-center"
+                                             style="height: 80px; width: 80px;">
+                                            <i class="bi bi-image text-muted"></i>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-4">
+                                    <h5 class="card-title mb-1">@booking.Equipment?.Name</h5>
+                                    <p class="text-muted mb-1">
+                                        <i class="bi bi-tag"></i> @booking.Equipment?.Category?.Name
+                                    </p>
+                                    <p class="text-muted mb-1">
+                                        <i class="bi bi-person"></i> Requested by: @booking.Renter?.FirstName @booking.Renter?.LastName
+                                    </p>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-envelope"></i> @booking.Renter?.Email
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-2">
+                                        <strong>From:</strong><br>
+                                        <span class="text-primary">@booking.StartDate.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                    <div>
+                                        <strong>To:</strong><br>
+                                        <span class="text-primary">@booking.EndDate.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="text-center">
+                                        <h4 class="text-success mb-1">₹@booking.TotalPrice.ToString("F2")</h4>
+                                        <small class="text-muted">Total</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="badge fs-6 p-2
+                                        @(booking.Status == "Pending" ? "bg-warning" :
+                                          booking.Status == "Approved" ? "bg-success" :
+                                          booking.Status == "Rejected" ? "bg-danger" :
+                                          booking.Status == "Completed" ? "bg-info" : "bg-secondary")">
+                                        @booking.Status
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            Requested on @booking.CreatedDate.ToString("MMM dd, yyyy 'at' hh:mm tt")
+                                        </small>
+                                        <div class="btn-group">
+                                            @if (booking.Status == "Pending")
+                                            {
+                                                <button class="btn btn-success btn-sm approve-btn"
+                                                        data-booking-id="@booking.Id"
+                                                        data-equipment-id="@booking.EquipmentId">
+                                                    <i class="bi bi-check-circle"></i> Approve
+                                                </button>
+                                                <button class="btn btn-danger btn-sm reject-btn"
+                                                        data-booking-id="@booking.Id"
+                                                        data-equipment-id="@booking.EquipmentId">
+                                                    <i class="bi bi-x-circle"></i> Reject
+                                                </button>
+                                            }
+                                            <a asp-controller="Booking" asp-action="Details" asp-route-id="@booking.Id"
+                                               class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-eye"></i> View Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Request Statistics -->
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-primary">@Model.Count()</h3>
+                        <p class="text-muted mb-0">Total Requests</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-success">@Model.Count(b => b.Status == "Approved")</h3>
+                        <p class="text-muted mb-0">Approved</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-warning">@Model.Count(b => b.Status == "Pending")</h3>
+                        <p class="text-muted mb-0">Pending</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-info">₹@Model.Sum(b => b.TotalPrice).ToString("F2")</h3>
+                        <p class="text-muted mb-0">Total Value</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-inbox display-4 text-muted mb-3"></i>
+            <h4>No Booking Requests</h4>
+            <p class="text-muted mb-4">
+                You don't have any booking requests at the moment. When someone requests your equipment, they'll appear here.
+            </p>
+            <a asp-controller="Equipment" asp-action="MyEquipment" class="btn btn-primary">
+                <i class="bi bi-tools"></i> View My Equipment
+            </a>
+        </div>
+    }
+</div>
+
+<!-- Hidden form for anti-forgery token -->
+<form id="updateStatusForm" method="post" style="display: none;">
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Handle approve button click
+            $('.approve-btn').click(function() {
+                const bookingId = $(this).data('booking-id');
+                const equipmentId = $(this).data('equipment-id');
+
+                if (confirm('Are you sure you want to approve this booking request?')) {
+                    updateBookingStatus(bookingId, 'Approved', equipmentId);
+                }
+            });
+
+            // Handle reject button click
+            $('.reject-btn').click(function() {
+                const bookingId = $(this).data('booking-id');
+                const equipmentId = $(this).data('equipment-id');
+
+                if (confirm('Are you sure you want to reject this booking request?')) {
+                    updateBookingStatus(bookingId, 'Rejected', equipmentId);
+                }
+            });
+
+            function updateBookingStatus(bookingId, status, equipmentId) {
+                // Get the anti-forgery token from the hidden form
+                var token = $('#updateStatusForm input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    url: '@Url.Action("UpdateStatus", "Booking")',
+                    type: 'POST',
+                    data: {
+                        __RequestVerificationToken: token,
+                        bookingId: bookingId,
+                        status: status
+                    },
+                    dataType: 'json'
+                })
+                .done(function(response) {
+                    if (response.success) {
+                        // Show success message
+                        alert('Booking ' + status.toLowerCase() + ' successfully!');
+
+                        // Reload the page to reflect changes
+                        location.reload();
+                    } else {
+                        alert('Failed to update booking status: ' + response.message);
+                    }
+                })
+                .fail(function(xhr, status, error) {
+                    console.log('AJAX Error:', xhr, status, error);
+                    if (xhr.status === 400) {
+                        alert('Security validation failed. Please refresh the page and try again.');
+                    } else {
+                        alert('An error occurred while updating the booking status. Please try again.');
+                    }
+                });
+            }
+        });
+    </script>
+}

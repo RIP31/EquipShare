@@ -1,0 +1,152 @@
+@model IEnumerable<EquipShare.Models.Booking>
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>My Bookings</h2>
+            <p class="text-muted mb-0">Track your equipment rentals</p>
+        </div>
+        <a asp-controller="Equipment" asp-action="Index" class="btn btn-outline-primary">
+            <i class="bi bi-search"></i> Browse More Equipment
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-4">
+            @foreach (var booking in Model)
+            {
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    @if (!string.IsNullOrEmpty(booking.Equipment?.ImageUrl))
+                                    {
+                                        <img src="@booking.Equipment.ImageUrl" class="img-fluid rounded"
+                                             alt="@booking.Equipment.Name" style="height: 80px; object-fit: cover;">
+                                    }
+                                    else
+                                    {
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-center"
+                                             style="height: 80px; width: 80px;">
+                                            <i class="bi bi-image text-muted"></i>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-4">
+                                    <h5 class="card-title mb-1">@booking.Equipment?.Name</h5>
+                                    <p class="text-muted mb-1">
+                                        <i class="bi bi-tag"></i> @booking.Equipment?.Category?.Name
+                                    </p>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-person"></i> @booking.Equipment?.Owner?.FirstName @booking.Equipment?.Owner?.LastName
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-2">
+                                        <strong>From:</strong><br>
+                                        <span class="text-primary">@booking.StartDate.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                    <div>
+                                        <strong>To:</strong><br>
+                                        <span class="text-primary">@booking.EndDate.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="text-center">
+                                        <h4 class="text-success mb-1">₹@booking.TotalPrice.ToString("F2")</h4>
+                                        <small class="text-muted">Total</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="badge fs-6 p-2
+                                        @(booking.Status == "Pending" ? "bg-warning" :
+                                          booking.Status == "Approved" ? "bg-success" :
+                                          booking.Status == "Rejected" ? "bg-danger" :
+                                          booking.Status == "Completed" ? "bg-info" : "bg-secondary")">
+                                        @booking.Status
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            Booked on @booking.CreatedDate.ToString("MMM dd, yyyy 'at' hh:mm tt")
+                                        </small>
+                                        <div class="btn-group">
+                                            <a asp-controller="Booking" asp-action="Details" asp-route-id="@booking.Id"
+                                               class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-eye"></i> View Details
+                                            </a>
+                                            @if (booking.Status == "Pending")
+                                            {
+                                                <button class="btn btn-outline-secondary btn-sm" title="Cancel Booking">
+                                                    <i class="bi bi-x-circle"></i> Cancel
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Booking Statistics -->
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-primary">@Model.Count()</h3>
+                        <p class="text-muted mb-0">Total Bookings</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-success">@Model.Count(b => b.Status == "Approved")</h3>
+                        <p class="text-muted mb-0">Approved</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-warning">@Model.Count(b => b.Status == "Pending")</h3>
+                        <p class="text-muted mb-0">Pending</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-info">₹@Model.Sum(b => b.TotalPrice).ToString("F2")</h3>
+                        <p class="text-muted mb-0">Total Spent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-calendar-x display-4 text-muted mb-3"></i>
+            <h4>No Bookings Yet</h4>
+            <p class="text-muted mb-4">
+                You haven't made any bookings yet. Browse available equipment to get started.
+            </p>
+            <a asp-controller="Equipment" asp-action="Index" class="btn btn-primary">
+                <i class="bi bi-search"></i> Browse Equipment
+            </a>
+        </div>
+    }
+</div>
