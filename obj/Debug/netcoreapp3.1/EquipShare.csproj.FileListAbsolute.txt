@@ -397,3 +397,4 @@ d:\ridham\DDU\Projects\Dot-net-Project\EquipShare\EquipShare\obj\Debug\netcoreap
 d:\ridham\DDU\Projects\Dot-net-Project\EquipShare\EquipShare\obj\Debug\netcoreapp3.1\EquipShare.dll
 d:\ridham\DDU\Projects\Dot-net-Project\EquipShare\EquipShare\obj\Debug\netcoreapp3.1\EquipShare.pdb
 d:\ridham\DDU\Projects\Dot-net-Project\EquipShare\EquipShare\obj\Debug\netcoreapp3.1\EquipShare.genruntimeconfig.cache
+d:\ridham\DDU\Projects\Dot-net-Project\EquipShare\EquipShare\obj\Debug\netcoreapp3.1\EquipShare.sourcelink.json

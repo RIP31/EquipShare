@@ -34,13 +34,14 @@ namespace EquipShare.Controllers
             var model = new BookingCreateModel
             {
                 EquipmentId = equipmentId,
+                SelectedBookingType = BookingType.OneDay,
+                OneDayBookingDate = startDate ?? DateTime.Today,
                 StartDate = startDate ?? DateTime.Today,
-                EndDate = endDate ?? DateTime.Today.AddDays(1)
+                EndDate = (startDate ?? DateTime.Today).AddDays(1).AddTicks(-1) // End of the selected day
             };
 
             // Calculate initial total
-            model.TotalDays = (model.EndDate - model.StartDate).Days + 1;
-            model.TotalPrice = _bookingService.CalculateTotalPrice(equipmentId, model.StartDate, model.EndDate);
+            model.TotalPrice = _bookingService.CalculateTotalPrice(equipmentId, model.StartDate.Value, model.EndDate.Value);
 
             ViewBag.EquipmentName = equipment.Name;
             ViewBag.PricePerDay = equipment.PricePerDay;
@@ -58,8 +59,31 @@ namespace EquipShare.Controllers
 
             if (ModelState.IsValid)
             {
+                // Validate based on booking type
+                DateTime startDate, endDate;
+                if (model.SelectedBookingType == BookingType.OneDay)
+                {
+                    if (!model.OneDayBookingDate.HasValue)
+                    {
+                        ModelState.AddModelError("", "Please select a booking date.");
+                        return View(model);
+                    }
+                    startDate = model.OneDayBookingDate.Value;
+                    endDate = model.OneDayBookingDate.Value.AddDays(1).AddTicks(-1);
+                }
+                else // Multiple days
+                {
+                    if (!model.StartDate.HasValue || !model.EndDate.HasValue)
+                    {
+                        ModelState.AddModelError("", "Please select both start and end dates.");
+                        return View(model);
+                    }
+                    startDate = model.StartDate.Value;
+                    endDate = model.EndDate.Value;
+                }
+
                 // Check if equipment is available for the selected dates
-                if (!_bookingService.IsEquipmentAvailable(model.EquipmentId, model.StartDate, model.EndDate))
+                if (!_bookingService.IsEquipmentAvailable(model.EquipmentId, startDate, endDate))
                 {
                     ModelState.AddModelError("", "This equipment is not available for the selected dates.");
 
@@ -68,14 +92,12 @@ namespace EquipShare.Controllers
                     ViewBag.EquipmentName = equipment.Name;
                     ViewBag.PricePerDay = equipment.PricePerDay;
                     ViewBag.EquipmentImage = equipment.ImageUrl;
-                    model.TotalDays = (model.EndDate - model.StartDate).Days + 1;
 
                     return View(model);
                 }
 
                 // Calculate total price
-                model.TotalPrice = _bookingService.CalculateTotalPrice(model.EquipmentId, model.StartDate, model.EndDate);
-                model.TotalDays = (model.EndDate - model.StartDate).Days + 1;
+                model.TotalPrice = _bookingService.CalculateTotalPrice(model.EquipmentId, startDate, endDate);
 
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (!userId.HasValue)
@@ -107,7 +129,6 @@ namespace EquipShare.Controllers
                         ViewBag.PricePerDay = 0;
                         ViewBag.EquipmentImage = null;
                     }
-                    model.TotalDays = (model.EndDate - model.StartDate).Days + 1;
 
                     return View(model);
                 }

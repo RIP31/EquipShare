@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using EquipShare.Data;
 using EquipShare.Models;
 using EquipShare.Models.ViewModels;
+using static EquipShare.Models.ViewModels.BookingCreateModel;
 
 namespace EquipShare.Services
 {
@@ -26,12 +27,33 @@ namespace EquipShare.Services
                 throw new ArgumentException($"Equipment with ID {model.EquipmentId} does not exist.");
             }
 
+            // Determine dates based on booking type
+            DateTime startDate, endDate;
+            if (model.SelectedBookingType == BookingType.OneDay)
+            {
+                if (!model.OneDayBookingDate.HasValue)
+                {
+                    throw new ArgumentException("Booking date is required for one-day booking.");
+                }
+                startDate = model.OneDayBookingDate.Value;
+                endDate = model.OneDayBookingDate.Value.AddDays(1).AddTicks(-1); // End of the selected day
+            }
+            else // Multiple days
+            {
+                if (!model.StartDate.HasValue || !model.EndDate.HasValue)
+                {
+                    throw new ArgumentException("Start and end dates are required for multiple-day booking.");
+                }
+                startDate = model.StartDate.Value;
+                endDate = model.EndDate.Value;
+            }
+
             var booking = new Booking
             {
                 EquipmentId = model.EquipmentId,
                 RenterId = renterId,
-                StartDate = model.StartDate,
-                EndDate = model.EndDate,
+                StartDate = startDate,
+                EndDate = endDate,
                 TotalPrice = model.TotalPrice,
                 Status = "Pending"
             };

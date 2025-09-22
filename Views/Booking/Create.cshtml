@@ -15,9 +15,19 @@
                 </div>
                 <div class="card-body">
                     <form asp-action="Create" method="post">
-                        <!-- Preserve EquipmentId in POST request -->
-                        <input type="hidden" name="EquipmentId" value="@Model.EquipmentId" id="bookingEquipmentId">
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                    <!-- Preserve EquipmentId in POST request -->
+                    <input type="hidden" name="EquipmentId" value="@Model.EquipmentId" id="bookingEquipmentId">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <!-- Booking Type Selection -->
+                    <div class="mb-3">
+                        <label asp-for="SelectedBookingType" class="form-label">Booking Type</label>
+                        <select asp-for="SelectedBookingType" class="form-select" id="bookingTypeSelect" onchange="toggleBookingOptions()">
+                            <option value="1">One Day Booking</option>
+                            <option value="2">Multiple Days Booking</option>
+                        </select>
+                        <span asp-validation-for="SelectedBookingType" class="text-danger"></span>
+                    </div>
 
                         <!-- Equipment Info Display -->
                         <div class="alert alert-info">
@@ -44,25 +54,44 @@
                                     {
                                         <p class="mb-1 text-danger">Unable to load equipment details</p>
                                     }
-                                    <small class="text-muted">Select your rental dates below</small>
+                                    <small class="text-muted">Choose your booking type and select dates below</small>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="StartDate" class="form-label">Start Date *</label>
-                                <input asp-for="StartDate" class="form-control" type="date"
-                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                                <span asp-validation-for="StartDate" class="text-danger"></span>
-                            </div>
+                        <!-- One Day Booking Option -->
+                        <div id="oneDayBooking" class="mb-3">
+                            <label asp-for="OneDayBookingDate" class="form-label">Booking Date *</label>
+                            <input asp-for="OneDayBookingDate" class="form-control" type="date"
+                                   min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                   onchange="updatePriceCalculation()" />
+                            <span asp-validation-for="OneDayBookingDate" class="text-danger"></span>
+                            <small class="form-text text-muted">
+                                <i class="bi bi-calendar-day"></i> Full day rental
+                            </small>
+                        </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="EndDate" class="form-label">End Date *</label>
-                                <input asp-for="EndDate" class="form-control" type="date"
-                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                        <!-- Multiple Days Booking Option -->
+                        <div id="multipleDayBooking" class="mb-3" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <label asp-for="StartDate" class="form-label">Start Date *</label>
+                                    <input asp-for="StartDate" class="form-control" type="date"
+                                           min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                           onchange="updatePriceCalculation()" />
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label asp-for="EndDate" class="form-label">End Date *</label>
+                                    <input asp-for="EndDate" class="form-control" type="date"
+                                           min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                           onchange="updatePriceCalculation()" />
+                                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                                </div>
                             </div>
+                            <small class="form-text text-muted">
+                                <i class="bi bi-calendar-range"></i> Select your rental period
+                            </small>
                         </div>
 
                         <!-- Price Calculation Display -->
@@ -83,8 +112,8 @@
                                             }
                                         </div>
                                         <div class="d-flex justify-content-between">
-                                            <span>Number of days:</span>
-                                            <span id="totalDays">@Model.TotalDays</span>
+                                            <span>Duration:</span>
+                                            <span id="totalDays">@Model.TotalDays day</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -101,8 +130,11 @@
                             <i class="bi bi-exclamation-triangle"></i>
                             <strong>Important:</strong>
                             <ul class="mb-0 mt-2">
+                                <li>Choose between one-day or multiple-day booking options</li>
+                                <li>One-day bookings: Equipment must be returned the same day</li>
+                                <li>Multiple-day bookings: Select your rental period</li>
                                 <li>Bookings are subject to owner approval</li>
-                                <li>Contact the owner to arrange pickup and return</li>
+                                <li>Contact the owner to arrange pickup and return times</li>
                                 <li>Return equipment in the same condition as received</li>
                                 <li>Late returns may incur additional charges</li>
                             </ul>
@@ -126,25 +158,50 @@
 
 @section Scripts {
     <script>
-        // Calculate total price when dates change
-        function calculateTotal() {
-            const startDate = new Date(document.getElementById('StartDate').value);
-            const endDate = new Date(document.getElementById('EndDate').value);
+        // Toggle between booking options
+        function toggleBookingOptions() {
+            const bookingType = document.getElementById("bookingTypeSelect").value;
+            const oneDaySection = document.getElementById("oneDayBooking");
+            const multipleDaySection = document.getElementById("multipleDayBooking");
+
+            if (bookingType === "1") { // One Day
+                oneDaySection.style.display = "block";
+                multipleDaySection.style.display = "none";
+            } else { // Multiple Days
+                oneDaySection.style.display = "none";
+                multipleDaySection.style.display = "block";
+            }
+
+            updatePriceCalculation();
+        }
+
+        // Update price calculation based on booking type
+        function updatePriceCalculation() {
+            const bookingType = document.getElementById("bookingTypeSelect").value;
             const pricePerDay = @(ViewBag.PricePerDay ?? 0);
 
-            if (startDate && endDate && startDate <= endDate) {
-                const timeDiff = endDate.getTime() - startDate.getTime();
-                const days = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
-                const total = days * pricePerDay;
+            if (bookingType === "1") { // One Day
+                const bookingDate = document.getElementById('OneDayBookingDate').value;
+                if (bookingDate) {
+                    document.getElementById('totalDays').textContent = '1 day';
+                    document.getElementById('totalPrice').textContent = '₹' + pricePerDay.toFixed(2);
+                }
+            } else { // Multiple Days
+                const startDate = document.getElementById('StartDate').value;
+                const endDate = document.getElementById('EndDate').value;
 
-                document.getElementById('totalDays').textContent = days;
-                document.getElementById('totalPrice').textContent = '₹' + total.toFixed(2);
+                if (startDate && endDate && startDate <= endDate) {
+                    const days = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
+                    const total = days * pricePerDay;
+
+                    document.getElementById('totalDays').textContent = days + ' day' + (days > 1 ? 's' : '');
+                    document.getElementById('totalPrice').textContent = '₹' + total.toFixed(2);
+                }
             }
         }
 
-        // Add event listeners to date inputs
-        document.getElementById('StartDate').addEventListener('change', calculateTotal);
-        document.getElementById('EndDate').addEventListener('change', calculateTotal);
+        // Initialize on page load
+        toggleBookingOptions();
 
         // Validation function for booking submission
         function validateBookingSubmission() {
@@ -156,18 +213,48 @@
                 return false;
             }
 
-            // Validate dates
-            const startDate = new Date(document.getElementById('StartDate').value);
-            const endDate = new Date(document.getElementById('EndDate').value);
+            const bookingType = document.getElementById("bookingTypeSelect").value;
 
-            if (!startDate || !endDate) {
-                alert('Please select both start and end dates.');
-                return false;
-            }
+            if (bookingType === "1") { // One Day
+                const bookingDate = document.getElementById('OneDayBookingDate').value;
+                if (!bookingDate) {
+                    alert('Please select a booking date.');
+                    return false;
+                }
 
-            if (startDate >= endDate) {
-                alert('End date must be after start date.');
-                return false;
+                // Check if date is not in the past
+                const selectedDate = new Date(bookingDate);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                if (selectedDate < today) {
+                    alert('Please select a date that is not in the past.');
+                    return false;
+                }
+            } else { // Multiple Days
+                const startDate = document.getElementById('StartDate').value;
+                const endDate = document.getElementById('EndDate').value;
+
+                if (!startDate || !endDate) {
+                    alert('Please select both start and end dates.');
+                    return false;
+                }
+
+                if (startDate >= endDate) {
+                    alert('End date must be after start date.');
+                    return false;
+                }
+
+                // Check if dates are not in the past
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                if (start < today || end < today) {
+                    alert('Please select dates that are not in the past.');
+                    return false;
+                }
             }
 
             return true;

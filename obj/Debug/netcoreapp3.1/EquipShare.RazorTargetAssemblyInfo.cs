@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyProductAttribute("EquipShare")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79b270662c2bf80065b206a0adbc020695d28cb1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EquipShare.Views")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 

@@ -169,27 +169,33 @@
 @section Scripts {
     <script>
         $(document).ready(function() {
-            // Handle approve button click
-            $('.approve-btn').click(function() {
+            // Use event delegation for dynamic content handling
+            $(document).on('click', '.approve-btn', function(e) {
+                e.preventDefault();
                 const bookingId = $(this).data('booking-id');
                 const equipmentId = $(this).data('equipment-id');
 
                 if (confirm('Are you sure you want to approve this booking request?')) {
-                    updateBookingStatus(bookingId, 'Approved', equipmentId);
+                    updateBookingStatus(bookingId, 'Approved', $(this));
                 }
             });
 
-            // Handle reject button click
-            $('.reject-btn').click(function() {
+            $(document).on('click', '.reject-btn', function(e) {
+                e.preventDefault();
                 const bookingId = $(this).data('booking-id');
                 const equipmentId = $(this).data('equipment-id');
 
                 if (confirm('Are you sure you want to reject this booking request?')) {
-                    updateBookingStatus(bookingId, 'Rejected', equipmentId);
+                    updateBookingStatus(bookingId, 'Rejected', $(this));
                 }
             });
 
-            function updateBookingStatus(bookingId, status, equipmentId) {
+            function updateBookingStatus(bookingId, status, buttonElement) {
+                // Disable button and show loading state
+                buttonElement.prop('disabled', true);
+                const originalText = buttonElement.html();
+                buttonElement.html('<i class="bi bi-hourglass-split"></i> Processing...');
+
                 // Get the anti-forgery token from the hidden form
                 var token = $('#updateStatusForm input[name="__RequestVerificationToken"]').val();
 
@@ -201,28 +207,110 @@
                         bookingId: bookingId,
                         status: status
                     },
-                    dataType: 'json'
+                    dataType: 'json',
+                    timeout: 10000 // 10 second timeout
                 })
                 .done(function(response) {
                     if (response.success) {
-                        // Show success message
-                        alert('Booking ' + status.toLowerCase() + ' successfully!');
+                        // Show success message with better styling
+                        showAlert('Booking ' + status.toLowerCase() + ' successfully!', 'success');
 
-                        // Reload the page to reflect changes
-                        location.reload();
+                        // Reload the page after a short delay to show the success message
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
                     } else {
-                        alert('Failed to update booking status: ' + response.message);
+                        showAlert('Failed to update booking status: ' + (response.message || 'Unknown error'), 'danger');
+                        resetButton(buttonElement, originalText);
                     }
                 })
                 .fail(function(xhr, status, error) {
                     console.log('AJAX Error:', xhr, status, error);
+
+                    let errorMessage = 'An error occurred while updating the booking status.';
                     if (xhr.status === 400) {
-                        alert('Security validation failed. Please refresh the page and try again.');
-                    } else {
-                        alert('An error occurred while updating the booking status. Please try again.');
+                        errorMessage = 'Security validation failed. Please refresh the page and try again.';
+                    } else if (xhr.status === 401) {
+                        errorMessage = 'You are not authorized to perform this action.';
+                    } else if (status === 'timeout') {
+                        errorMessage = 'Request timed out. Please try again.';
                     }
+
+                    showAlert(errorMessage, 'danger');
+                    resetButton(buttonElement, originalText);
                 });
+            }
+
+            function showAlert(message, type) {
+                // Create alert element
+                const alertHtml = `
+                    <div class="alert alert-${type} alert-dismissible fade show position-fixed"
+                         style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;">
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+
+                // Add to page
+                $('body').append(alertHtml);
+
+                // Auto-dismiss after 5 seconds
+                setTimeout(function() {
+                    $('.alert').fadeOut();
+                }, 5000);
+            }
+
+            function resetButton(buttonElement, originalText) {
+                buttonElement.prop('disabled', false);
+                buttonElement.html(originalText);
             }
         });
     </script>
+
+    <style>
+    /* Enhanced button styles for booking actions */
+    .approve-btn:hover {
+        background-color: #198754 !important;
+        border-color: #198754 !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(25, 135, 84, 0.3);
+        transition: all 0.2s ease;
+    }
+
+    .reject-btn:hover {
+        background-color: #dc3545 !important;
+        border-color: #dc3545 !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        transition: all 0.2s ease;
+    }
+
+    .approve-btn:disabled, .reject-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Status badge improvements */
+    .badge {
+        font-size: 0.75em;
+        padding: 0.5em 0.75em;
+    }
+
+    /* Alert positioning */
+    .alert {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Card hover effects */
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    </style>
 }

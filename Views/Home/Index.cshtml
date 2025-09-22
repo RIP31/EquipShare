@@ -5,25 +5,21 @@
 }
 
 <!-- Hero Section -->
-<section class="hero-section bg-gradient-primary text-white py-5">
-    <div class="container">
+<section class="hero-section text-white">
+    <div class="container text-center text-lg-start">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4">Share Equipment, Save Money</h1>
-                <p class="lead mb-4">Connect with your community to rent tools, machinery, and equipment you need, or list your own items to earn extra income.</p>
-                <div class="d-flex gap-3">
-                    <a asp-controller="Equipment" asp-action="Index" class="btn btn-light btn-lg">
-                        <i class="bi bi-search"></i> Browse Equipment
-                    </a>
-                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-light btn-lg">
-                        <i class="bi bi-person-plus"></i> Get Started
-                    </a>
-                </div>
+                <h1 class="mb-4">Rent Smarter. <br> Share Equipment Easily.</h1>
+                <p class="mb-4">Save money and connect with your community by renting tools, machinery, and equipment near you.</p>
+                <a asp-controller="Equipment" asp-action="Index" class="btn btn-light btn-lg me-2">
+                    <i class="bi bi-search"></i> Browse Equipment
+                </a>
+                <a asp-controller="Account" asp-action="Register" class="btn btn-outline-light btn-lg">
+                    <i class="bi bi-person-plus"></i> Get Started
+                </a>
             </div>
-            <div class="col-lg-6">
-                <div class="text-center">
-                    <i class="bi bi-tools display-1 opacity-75"></i>
-                </div>
+            <div class="col-lg-6 d-none d-lg-block text-center">
+                <img src="/images/hero-tools.svg" alt="EquipShare" class="img-fluid" style="max-height: 350px;">
             </div>
         </div>
     </div>
@@ -33,53 +29,43 @@
 <section class="py-5">
     <div class="container">
         <div class="row text-center mb-5">
-            <div class="col-12">
-                <h2 class="display-5 fw-bold">Why Choose EquipShare?</h2>
-                <p class="lead text-muted">Everything you need for equipment sharing</p>
-            </div>
+            <h2 class="fw-bold">Why Choose EquipShare?</h2>
+            <p class="text-muted">A smarter way to access the tools you need</p>
         </div>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="text-center">
-                    <div class="mb-3">
-                        <i class="bi bi-shield-check display-4 text-success"></i>
-                    </div>
-                    <h5>Secure & Safe</h5>
-                    <p class="text-muted">Verified users and secure payment processing for peace of mind</p>
+                <div class="feature-card">
+                    <i class="bi bi-shield-check display-4 text-success mb-3"></i>
+                    <h5>Trusted & Secure</h5>
+                    <p class="text-muted">Verified users, safe transactions, and secure payments.</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="text-center">
-                    <div class="mb-3">
-                        <i class="bi bi-currency-dollar display-4 text-warning"></i>
-                    </div>
+                <div class="feature-card">
+                    <i class="bi bi-currency-dollar display-4 text-warning mb-3"></i>
                     <h5>Affordable</h5>
-                    <p class="text-muted">Save money by renting instead of buying expensive equipment</p>
+                    <p class="text-muted">Rent instead of buy and save money on equipment costs.</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="text-center">
-                    <div class="mb-3">
-                        <i class="bi bi-people display-4 text-info"></i>
-                    </div>
+                <div class="feature-card">
+                    <i class="bi bi-people display-4 text-info mb-3"></i>
                     <h5>Community</h5>
-                    <p class="text-muted">Connect with neighbors and local businesses in your area</p>
+                    <p class="text-muted">Connect with locals and support small businesses.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Featured Equipment Section -->
+<!-- Featured Equipment -->
 @if (Model != null && Model.Any())
 {
     <section class="py-5 bg-light">
         <div class="container">
-            <div class="row mb-4">
-                <div class="col-12 text-center">
-                    <h2 class="display-5 fw-bold">Featured Equipment</h2>
-                    <p class="lead text-muted">Popular items available for rent right now</p>
-                </div>
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">Featured Equipment</h2>
+                <p class="text-muted">Popular items available right now</p>
             </div>
             <div class="row g-4">
                 @foreach (var equipment in Model.Take(6))
@@ -94,120 +80,33 @@
                                 }
                                 else
                                 {
-                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                                    <div class="d-flex align-items-center justify-content-center bg-light"
                                          style="height: 200px;">
                                         <i class="bi bi-image display-4 text-muted"></i>
                                     </div>
                                 }
-                                <div class="position-absolute top-0 end-0 m-2">
-                                    <span class="badge bg-success">
-                                        <i class="bi bi-check-circle"></i> Available
-                                    </span>
-                                </div>
+                                <span class="badge bg-success position-absolute top-0 end-0 m-2">Available</span>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">@equipment.Name</h5>
                                 <p class="card-text text-muted small">
-                                    @if (equipment.Description != null && equipment.Description.Length > 80)
-                                    {
-                                        @(equipment.Description.Substring(0, 80))
-                                    }
-                                    else
-                                    {
-                                        @equipment.Description
-                                    }
+                                    @(equipment.Description?.Length > 80 ? equipment.Description.Substring(0, 80) + "..." : equipment.Description)
                                 </p>
-                                <div class="mb-2">
-                                    <span class="badge bg-primary">@equipment.Category?.Name</span>
-                                </div>
+                                <div class="mb-2"><span class="badge bg-primary">@equipment.Category?.Name</span></div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h4 class="text-primary mb-0">₹@equipment.PricePerDay.ToString("F2")</h4>
-                                        <small class="text-muted">per day</small>
-                                    </div>
-                                    <a asp-controller="Equipment" asp-action="Details" asp-route-id="@equipment.Id"
-                                       class="btn btn-outline-primary">
-                                        <i class="bi bi-eye"></i> View
-                                    </a>
+                                    <h4 class="text-primary mb-0">₹@equipment.PricePerDay.ToString("F2") <small class="text-muted fs-6">/day</small></h4>
+                                    <a asp-controller="Equipment" asp-action="Details" asp-route-id="@equipment.Id" class="btn btn-outline-primary btn-sm">View</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
             </div>
-            <div class="row mt-4">
-                <div class="col-12 text-center">
-                    <a asp-controller="Equipment" asp-action="Index" class="btn btn-primary btn-lg">
-                        <i class="bi bi-grid-3x3-gap"></i> View All Equipment
-                    </a>
-                </div>
+            <div class="text-center mt-4">
+                <a asp-controller="Equipment" asp-action="Index" class="btn btn-primary btn-lg">
+                    <i class="bi bi-grid-3x3-gap"></i> View All Equipment
+                </a>
             </div>
         </div>
     </section>
 }
-
-<!-- How It Works Section -->
-<section class="py-5">
-    <div class="container">
-        <div class="row mb-5">
-            <div class="col-12 text-center">
-                <h2 class="display-5 fw-bold">How It Works</h2>
-                <p class="lead text-muted">Simple steps to get started</p>
-            </div>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="text-center">
-                    <div class="mb-3">
-                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center"
-                             style="width: 60px; height: 60px;">
-                            <span class="text-white fw-bold">1</span>
-                        </div>
-                    </div>
-                    <h5>Create Account</h5>
-                    <p class="text-muted">Sign up as a renter or equipment owner in minutes</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="text-center">
-                    <div class="mb-3">
-                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center"
-                             style="width: 60px; height: 60px;">
-                            <span class="text-white fw-bold">2</span>
-                        </div>
-                    </div>
-                    <h5>List or Browse</h5>
-                    <p class="text-muted">List your equipment or browse available items</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="text-center">
-                    <div class="mb-3">
-                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center"
-                             style="width: 60px; height: 60px;">
-                            <span class="text-white fw-bold">3</span>
-                        </div>
-                    </div>
-                    <h5>Connect & Share</h5>
-                    <p class="text-muted">Book equipment and arrange pickup with owners</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-.hero-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 500px;
-}
-
-.hover-card:hover {
-    transform: translateY(-2px);
-    transition: transform 0.2s ease-in-out;
-}
-
-.bg-gradient-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-</style>

@@ -4,79 +4,85 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EquipShare</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
         <div class="container">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                <i class="bi bi-tools"></i> EquipShare
+            <a class="navbar-brand fw-bold text-primary d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-tools me-2"></i> EquipShare
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Equipment" asp-action="Index">Browse Equipment</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Booking" asp-action="MyBookings">My Bookings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Equipment" asp-action="MyEquipment">My Equipment</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="About">How It Works</a>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-3">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Equipment" asp-action="Index">Browse</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Booking" asp-action="MyBookings">Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Equipment" asp-action="MyEquipment">My Equipment</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">How It Works</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <partial name="_LoginPartial" />
                     </li>
                 </ul>
-                <partial name="_LoginPartial" />
             </div>
         </div>
     </nav>
 
-    <div class="container">
-        <main role="main" class="pb-3">
+    <!-- MAIN CONTENT -->
+    <div class="container" style="padding-top: 80px;">
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="bg-dark text-white mt-5">
-        <div class="container py-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>EquipShare</h5>
-                    <p>The platform that connects equipment owners with renters.</p>
+    <!-- FOOTER -->
+    <footer class="footer bg-dark text-white mt-auto py-5">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3">EquipShare</h5>
+                    <p>Connecting equipment owners with renters for smarter, more affordable sharing.</p>
                 </div>
-                <div class="col-md-3">
-                    <h5>Links</h5>
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Home</a></li>
-                        <li><a href="#" class="text-white">Browse</a></li>
-                        <li><a href="#" class="text-white">About</a></li>
+                        <li><a asp-controller="Home" asp-action="Index" class="text-white text-decoration-none">Home</a></li>
+                        <li><a asp-controller="Equipment" asp-action="Index" class="text-white text-decoration-none">Browse</a></li>
+                        <li><a asp-controller="Home" asp-action="About" class="text-white text-decoration-none">About</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3">
-                    <h5>Contact</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="bi bi-envelope"></i> info@equipshare.com</li>
-                        <li><i class="bi bi-telephone"></i> (555) 123-4567</li>
-                    </ul>
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <p><i class="bi bi-envelope"></i> info@equipshare.com</p>
+                    <p><i class="bi bi-telephone"></i> (555) 123-4567</p>
+                    <div class="d-flex gap-3 mt-2">
+                        <a href="#" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+                    </div>
                 </div>
             </div>
-            <hr>
-            <div class="text-center">
-                <p>&copy; 2023 EquipShare. All rights reserved.</p>
-            </div>
+            <hr class="mt-4 mb-3 border-secondary">
+            <div class="text-center small">&copy; @DateTime.Now.Year EquipShare. All rights reserved.</div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <partial name="_ValidationScriptsPartial" />
     @await RenderSectionAsync("Scripts", required: false)
