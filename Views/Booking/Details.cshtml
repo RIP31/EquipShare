@@ -114,6 +114,18 @@
                                     <td>Number of days:</td>
                                     <td>@((Model.EndDate - Model.StartDate).Days + 1)</td>
                                 </tr>
+                                <tr>
+                                    <td>Equipment Cost:</td>
+                                    <td>₹@((Model.TotalPrice - Model.PlatformCost).ToString("F2"))</td>
+                                </tr>
+                                <tr>
+                                    <td>Platform Cost:</td>
+                                    <td>₹@Model.PlatformCost.ToString("F2")</td>
+                                </tr>
+                                <tr>
+                                    <td>Owner Receives:</td>
+                                    <td><strong class="text-info">₹@Model.OwnerReceivableAmount.ToString("F2")</strong></td>
+                                </tr>
                                 <tr class="border-top">
                                     <td><strong>Total Amount:</strong></td>
                                     <td><strong class="text-success">₹@Model.TotalPrice.ToString("F2")</strong></td>

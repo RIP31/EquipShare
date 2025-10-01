@@ -40,8 +40,7 @@ namespace EquipShare.Services
                 LastName = model.LastName,
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
-                PasswordHash = PasswordHasher.HashPassword(model.Password),
-                Role = model.UserType
+                PasswordHash = PasswordHasher.HashPassword(model.Password)
             };
 
             _context.Users.Add(user);
@@ -53,6 +52,11 @@ namespace EquipShare.Services
         public bool EmailExists(string email)
         {
             return _context.Users.Any(x => x.Email == email);
+        }
+
+        public User GetUserById(int userId)
+        {
+            return _context.Users.SingleOrDefault(x => x.Id == userId);
         }
     }
 }

@@ -34,7 +34,6 @@ namespace EquipShare.Controllers
                     HttpContext.Session.SetInt32("UserId", user.Id);
                     HttpContext.Session.SetString("UserEmail", user.Email);
                     HttpContext.Session.SetString("UserName", $"{user.FirstName} {user.LastName}");
-                    HttpContext.Session.SetString("UserRole", user.Role);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -65,7 +64,6 @@ namespace EquipShare.Controllers
                     HttpContext.Session.SetInt32("UserId", user.Id);
                     HttpContext.Session.SetString("UserEmail", user.Email);
                     HttpContext.Session.SetString("UserName", $"{user.FirstName} {user.LastName}");
-                    HttpContext.Session.SetString("UserRole", user.Role);
 
                     return RedirectToAction("Index", "Home");
                 }

@@ -22,7 +22,7 @@
                     <!-- Booking Type Selection -->
                     <div class="mb-3">
                         <label asp-for="SelectedBookingType" class="form-label">Booking Type</label>
-                        <select asp-for="SelectedBookingType" class="form-select" id="bookingTypeSelect" onchange="toggleBookingOptions()">
+                        <select asp-for="SelectedBookingType" class="form-select" id="SelectedBookingType" onchange="toggleBookingOptions()">
                             <option value="1">One Day Booking</option>
                             <option value="2">Multiple Days Booking</option>
                         </select>
@@ -115,6 +115,18 @@
                                             <span>Duration:</span>
                                             <span id="totalDays">@Model.TotalDays day</span>
                                         </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Equipment Cost:</span>
+                                            <span id="equipmentCost">₹@Model.EquipmentCost.ToString("F2")</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Platform Cost:</span>
+                                            <span id="platformCost">₹@Model.PlatformCost.ToString("F2")</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Owner Receives:</span>
+                                            <span id="ownerReceivableAmount">₹@Model.OwnerReceivableAmount.ToString("F2")</span>
+                                        </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="d-flex justify-content-between border-top pt-2">
@@ -160,7 +172,7 @@
     <script>
         // Toggle between booking options
         function toggleBookingOptions() {
-            const bookingType = document.getElementById("bookingTypeSelect").value;
+            const bookingType = document.getElementById("SelectedBookingType").value;
             const oneDaySection = document.getElementById("oneDayBooking");
             const multipleDaySection = document.getElementById("multipleDayBooking");
 
@@ -177,14 +189,22 @@
 
         // Update price calculation based on booking type
         function updatePriceCalculation() {
-            const bookingType = document.getElementById("bookingTypeSelect").value;
+            const bookingType = document.getElementById("SelectedBookingType").value;
             const pricePerDay = @(ViewBag.PricePerDay ?? 0);
 
             if (bookingType === "1") { // One Day
                 const bookingDate = document.getElementById('OneDayBookingDate').value;
                 if (bookingDate) {
+                    const equipmentCost = pricePerDay;
+                    const platformCost = equipmentCost * 0.05; // 5% platform fee
+                    const ownerReceivableAmount = equipmentCost; // Owner gets equipment cost only
+                    const totalPrice = equipmentCost + platformCost;
+
                     document.getElementById('totalDays').textContent = '1 day';
-                    document.getElementById('totalPrice').textContent = '₹' + pricePerDay.toFixed(2);
+                    document.getElementById('equipmentCost').textContent = '₹' + equipmentCost.toFixed(2);
+                    document.getElementById('platformCost').textContent = '₹' + platformCost.toFixed(2);
+                    document.getElementById('ownerReceivableAmount').textContent = '₹' + ownerReceivableAmount.toFixed(2);
+                    document.getElementById('totalPrice').textContent = '₹' + totalPrice.toFixed(2);
                 }
             } else { // Multiple Days
                 const startDate = document.getElementById('StartDate').value;
@@ -192,16 +212,68 @@
 
                 if (startDate && endDate && startDate <= endDate) {
                     const days = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
-                    const total = days * pricePerDay;
+                    const equipmentCost = days * pricePerDay;
+                    const platformCost = equipmentCost * 0.05; // 5% platform fee
+                    const ownerReceivableAmount = equipmentCost; // Owner gets equipment cost only
+                    const totalPrice = equipmentCost + platformCost;
 
                     document.getElementById('totalDays').textContent = days + ' day' + (days > 1 ? 's' : '');
-                    document.getElementById('totalPrice').textContent = '₹' + total.toFixed(2);
+                    document.getElementById('equipmentCost').textContent = '₹' + equipmentCost.toFixed(2);
+                    document.getElementById('platformCost').textContent = '₹' + platformCost.toFixed(2);
+                    document.getElementById('ownerReceivableAmount').textContent = '₹' + ownerReceivableAmount.toFixed(2);
+                    document.getElementById('totalPrice').textContent = '₹' + totalPrice.toFixed(2);
                 }
             }
         }
 
         // Initialize on page load
         toggleBookingOptions();
+
+        // Set form values based on model data
+        setTimeout(function() {
+            const bookingTypeSelect = document.getElementById("SelectedBookingType");
+            const oneDayDateInput = document.getElementById("OneDayBookingDate");
+            const startDateInput = document.getElementById("StartDate");
+            const endDateInput = document.getElementById("EndDate");
+
+            // Set booking type
+            if (bookingTypeSelect && @((int)Model.SelectedBookingType) > 0) {
+                bookingTypeSelect.value = @((int)Model.SelectedBookingType);
+                toggleBookingOptions(); // This will show/hide the correct sections
+            }
+
+            // Set dates based on booking type
+            @if (Model.SelectedBookingType == EquipShare.Models.ViewModels.BookingType.OneDay && Model.OneDayBookingDate.HasValue)
+            {
+                <text>
+                if (oneDayDateInput) {
+                    oneDayDateInput.value = "@Model.OneDayBookingDate.Value.ToString("yyyy-MM-dd")";
+                }
+                </text>
+            }
+            @if (Model.SelectedBookingType == EquipShare.Models.ViewModels.BookingType.MultipleDay)
+            {
+                @if (Model.StartDate.HasValue)
+                {
+                    <text>
+                    if (startDateInput) {
+                        startDateInput.value = "@Model.StartDate.Value.ToString("yyyy-MM-dd")";
+                    }
+                    </text>
+                }
+                @if (Model.EndDate.HasValue)
+                {
+                    <text>
+                    if (endDateInput) {
+                        endDateInput.value = "@Model.EndDate.Value.ToString("yyyy-MM-dd")";
+                    }
+                    </text>
+                }
+            }
+
+            // Trigger price calculation after setting values
+            updatePriceCalculation();
+        }, 100);
 
         // Validation function for booking submission
         function validateBookingSubmission() {
@@ -213,7 +285,7 @@
                 return false;
             }
 
-            const bookingType = document.getElementById("bookingTypeSelect").value;
+            const bookingType = document.getElementById("SelectedBookingType").value;
 
             if (bookingType === "1") { // One Day
                 const bookingDate = document.getElementById('OneDayBookingDate').value;

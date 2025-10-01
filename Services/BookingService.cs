@@ -27,6 +27,12 @@ namespace EquipShare.Services
                 throw new ArgumentException($"Equipment with ID {model.EquipmentId} does not exist.");
             }
 
+            // Prevent users from booking their own equipment
+            if (equipment.OwnerId == renterId)
+            {
+                throw new ArgumentException("You cannot book your own equipment.");
+            }
+
             // Determine dates based on booking type
             DateTime startDate, endDate;
             if (model.SelectedBookingType == BookingType.OneDay)
@@ -48,13 +54,17 @@ namespace EquipShare.Services
                 endDate = model.EndDate.Value;
             }
 
+            var priceBreakdown = CalculatePriceBreakdown(model.EquipmentId, startDate, endDate);
+
             var booking = new Booking
             {
                 EquipmentId = model.EquipmentId,
                 RenterId = renterId,
                 StartDate = startDate,
                 EndDate = endDate,
-                TotalPrice = model.TotalPrice,
+                TotalPrice = priceBreakdown.TotalPrice,
+                PlatformCost = priceBreakdown.PlatformCost,
+                OwnerReceivableAmount = priceBreakdown.OwnerReceivableAmount,
                 Status = "Pending"
             };
 
@@ -124,7 +134,31 @@ namespace EquipShare.Services
             if (equipment == null) return 0;
 
             var days = (endDate - startDate).Days + 1;
-            return equipment.PricePerDay * days;
+            var equipmentCost = equipment.PricePerDay * days;
+            var platformCost = CalculatePlatformCost(equipmentCost);
+            return equipmentCost + platformCost;
+        }
+
+        public (decimal EquipmentCost, decimal PlatformCost, decimal OwnerReceivableAmount, decimal TotalPrice) CalculatePriceBreakdown(int equipmentId, DateTime startDate, DateTime endDate)
+        {
+            var equipment = _context.Equipment.Find(equipmentId);
+            if (equipment == null) return (0, 0, 0, 0);
+
+            var days = (endDate - startDate).Days + 1;
+            var equipmentCost = equipment.PricePerDay * days;
+            var platformCost = CalculatePlatformCost(equipmentCost);
+            var ownerReceivableAmount = equipmentCost; // Owner gets only the equipment cost
+            var totalPrice = equipmentCost + platformCost;
+
+            return (equipmentCost, platformCost, ownerReceivableAmount, totalPrice);
+        }
+
+        private decimal CalculatePlatformCost(decimal equipmentCost)
+        {
+            // You can configure this in appsettings.json
+            // For now, using a simple percentage-based calculation
+            // You can modify this logic as needed
+            return equipmentCost * 0.05m; // 5% platform fee
         }
 
         public List<object> GetBookedDates(int equipmentId)

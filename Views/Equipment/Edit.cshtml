@@ -30,10 +30,14 @@
                                 <label asp-for="CategoryId" class="form-label">Category *</label>
                                 <select asp-for="CategoryId" class="form-select">
                                     <option value="">Select a category</option>
-                                    <option value="1">Construction</option>
-                                    <option value="2">Audio/Visual</option>
-                                    <option value="3">Party & Events</option>
-                                    <option value="4">Tools</option>
+                                    <option value="1">Construction & Tools</option>
+                                    <option value="2">Outdoor & Gardening</option>
+                                    <option value="3">Vehicles & Transport</option>
+                                    <option value="4">Electronics & Tech</option>
+                                    <option value="5">Events & Party Supplies</option>
+                                    <option value="6">Sports & Recreation</option>
+                                    <option value="7">Agriculture & Farming</option>
+                                    <option value="8">Miscellaneous</option>
                                 </select>
                                 <span asp-validation-for="CategoryId" class="text-danger"></span>
                             </div>
@@ -62,32 +66,100 @@
                                 <span asp-validation-for="Location" class="text-danger"></span>
                             </div>
                         </div>
+                        
+                        @section Scripts {
+                            <script>
+                                // Image preview functionality for multiple files (Edit form)
+                                document.querySelector('input[name="ImageFiles"]').addEventListener('change', function(e) {
+                                    const files = e.target.files;
+                                    const previewContainer = document.getElementById('previewContainer');
+                                    const previewArea = document.getElementById('imagePreview');
+                        
+                                    // Clear previous previews
+                                    previewContainer.innerHTML = '';
+                        
+                                    if (files.length > 0) {
+                                        previewArea.style.display = 'block';
+                        
+                                        // Limit to 5 images
+                                        const maxFiles = Math.min(files.length, 5);
+                        
+                                        for (let i = 0; i < maxFiles; i++) {
+                                            const file = files[i];
+                        
+                                            // Validate file type
+                                            if (file.type.startsWith('image/')) {
+                                                const reader = new FileReader();
+                        
+                                                reader.onload = function(e) {
+                                                    const previewDiv = document.createElement('div');
+                                                    previewDiv.className = 'image-preview-item';
+                                                    previewDiv.innerHTML = `
+                                                        <img src="${e.target.result}" alt="Preview ${i + 1}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;">
+                                                        <small class="d-block text-center mt-1">${file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name}</small>
+                                                    `;
+                                                    previewContainer.appendChild(previewDiv);
+                                                };
+                        
+                                                reader.readAsDataURL(file);
+                                            }
+                                        }
+                        
+                                        // Show warning if more than 5 files selected
+                                        if (files.length > 5) {
+                                            const warningDiv = document.createElement('div');
+                                            warningDiv.className = 'alert alert-warning mt-2';
+                                            warningDiv.innerHTML = '<small><i class="bi bi-exclamation-triangle me-1"></i>Only the first 5 images will be uploaded.</small>';
+                                            previewArea.appendChild(warningDiv);
+                                        }
+                                    } else {
+                                        previewArea.style.display = 'none';
+                                    }
+                                });
+                            </script>
+                        
+                            <style>
+                                .image-preview-item {
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    margin-bottom: 10px;
+                                }
+                            </style>
+                        }
 
                         <!-- Current Image Display -->
                         @if (!string.IsNullOrEmpty(Model.ImageUrl))
                         {
                             <div class="mb-3">
-                                <label class="form-label">Current Image</label>
+                                <label class="form-label">Current Images</label>
                                 <div class="d-flex align-items-center gap-3">
                                     <img src="@Model.ImageUrl" alt="Current equipment image"
                                          style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
                                     <div class="form-text">
-                                        <small class="text-muted">Leave the image field empty to keep the current image.</small>
+                                        <small class="text-muted">Leave the images field empty to keep current images.</small>
                                     </div>
                                 </div>
                             </div>
                         }
 
                         <div class="mb-3">
-                            <label asp-for="ImageFile" class="form-label">Change Image (Optional)</label>
-                            <input asp-for="ImageFile" class="form-control" type="file" accept="image/*" />
+                            <label class="form-label">Add/Update Images (Optional)</label>
+                            <input type="file" class="form-control" name="ImageFiles" multiple accept="image/*" />
                             <div class="form-text">
                                 <small class="text-muted">
-                                    Accepted formats: JPG, JPEG, PNG, GIF. Maximum file size: 5MB.<br>
-                                    Upload a new image to replace the current one.
+                                    You can select multiple images. Accepted formats: JPG, JPEG, PNG, GIF. Maximum 5 images, 5MB each.<br>
+                                    Upload new images to replace or add to the current ones.
                                 </small>
                             </div>
-                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                        </div>
+
+                        <!-- New Image Preview Area -->
+                        <div id="imagePreview" class="mb-3" style="display: none;">
+                            <label class="form-label">New Images Selected:</label>
+                            <div id="previewContainer" class="d-flex gap-2 flex-wrap">
+                                <!-- Image previews will be added here by JavaScript -->
+                            </div>
                         </div>
 
                         <div class="alert alert-info">

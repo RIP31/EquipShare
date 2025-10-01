@@ -32,9 +32,5 @@ namespace EquipShare.Models.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        [Required]
-        [Display(Name = "I want to:")]
-        public string UserType { get; set; } // Renter or Owner
     }
 }

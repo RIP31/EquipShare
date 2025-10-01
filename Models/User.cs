@@ -29,9 +29,6 @@ namespace EquipShare.Models
         [Required]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        [Required]
-        public string Role { get; set; } = "Renter"; // Renter, Owner, Admin
-
         // Navigation properties
         public virtual ICollection<Equipment> Equipment { get; set; }
     }

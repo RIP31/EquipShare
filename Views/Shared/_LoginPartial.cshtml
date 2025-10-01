@@ -9,7 +9,9 @@
 @if (userId.HasValue)
 {
     <div class="d-flex align-items-center">
-        <span class="me-3">Hello, @userName!</span>
+        <a asp-controller="Profile" asp-action="Index" class="btn btn-outline-primary me-2">
+            <i class="bi bi-person-circle me-1"></i>My Profile
+        </a>
         <form asp-controller="Account" asp-action="Logout" method="post">
             <button type="submit" class="btn btn-outline-secondary">Logout</button>
         </form>

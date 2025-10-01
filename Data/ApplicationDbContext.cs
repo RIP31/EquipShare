@@ -54,7 +54,6 @@ namespace EquipShare.Data
                 entity.Property(u => u.FirstName).IsRequired().HasMaxLength(100);
                 entity.Property(u => u.LastName).IsRequired().HasMaxLength(100);
                 entity.Property(u => u.PhoneNumber).HasMaxLength(20);
-                entity.Property(u => u.Role).IsRequired().HasMaxLength(20);
             });
 
             // Configure Equipment entity
@@ -84,10 +83,14 @@ namespace EquipShare.Data
 
             // Seed initial categories
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Construction", Description = "Construction equipment and tools" },
-                new Category { Id = 2, Name = "Audio/Visual", Description = "Audio and visual equipment" },
-                new Category { Id = 3, Name = "Party & Events", Description = "Equipment for parties and events" },
-                new Category { Id = 4, Name = "Tools", Description = "Various tools for different purposes" }
+                new Category { Id = 1, Name = "Construction & Tools", Description = "Construction equipment and tools for building and renovation" },
+                new Category { Id = 2, Name = "Outdoor & Gardening", Description = "Outdoor equipment, gardening tools, and landscaping supplies" },
+                new Category { Id = 3, Name = "Vehicles & Transport", Description = "Vehicles, trailers, and transportation equipment" },
+                new Category { Id = 4, Name = "Electronics & Tech", Description = "Electronic devices, computers, and technology equipment" },
+                new Category { Id = 5, Name = "Events & Party Supplies", Description = "Equipment and supplies for events, parties, and celebrations" },
+                new Category { Id = 6, Name = "Sports & Recreation", Description = "Sports equipment and recreational gear" },
+                new Category { Id = 7, Name = "Agriculture & Farming", Description = "Agricultural machinery and farming equipment" },
+                new Category { Id = 8, Name = "Miscellaneous", Description = "Other equipment and tools that don't fit into specific categories" }
             );
         }
     }

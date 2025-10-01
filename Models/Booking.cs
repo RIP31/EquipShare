@@ -24,6 +24,12 @@ namespace EquipShare.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalPrice { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal PlatformCost { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal OwnerReceivableAmount { get; set; }
+
         [Required]
         [MaxLength(20)]
         public string Status { get; set; } = "Pending"; // Pending, Approved, Rejected, Completed

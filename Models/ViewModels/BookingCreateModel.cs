@@ -30,6 +30,15 @@ namespace EquipShare.Models.ViewModels
         [Display(Name = "Total Days")]
         public int TotalDays => CalculateTotalDays();
 
+        [Display(Name = "Equipment Cost")]
+        public decimal EquipmentCost { get; set; }
+
+        [Display(Name = "Platform Cost")]
+        public decimal PlatformCost { get; set; }
+
+        [Display(Name = "Owner Receives")]
+        public decimal OwnerReceivableAmount { get; set; }
+
         [Display(Name = "Total Price")]
         public decimal TotalPrice { get; set; }
 

@@ -19,7 +19,7 @@
                 </a>
             </div>
             <div class="col-lg-6 d-none d-lg-block text-center">
-                <img src="/images/hero-tools.svg" alt="EquipShare" class="img-fluid" style="max-height: 350px;">
+                <img src="/images/Product.svg" alt="EquipShare" class="img-fluid" style="max-height: 350px;">
             </div>
         </div>
     </div>
@@ -68,14 +68,16 @@
                 <p class="text-muted">Popular items available right now</p>
             </div>
             <div class="row g-4">
-                @foreach (var equipment in Model.Take(6))
+                @foreach (var equipment in Model.Take(3))
                 {
                     <div class="col-lg-4 col-md-6">
                         <div class="card h-100 shadow-sm hover-card">
                             <div class="position-relative">
                                 @if (!string.IsNullOrEmpty(equipment.ImageUrl))
                                 {
-                                    <img src="@equipment.ImageUrl" class="card-img-top" alt="@equipment.Name"
+                                    var imageUrls = equipment.ImageUrl.Split('|').Where(url => !string.IsNullOrEmpty(url)).ToList();
+                                    var firstImage = imageUrls.Any() ? imageUrls.First() : equipment.ImageUrl;
+                                    <img src="@firstImage" class="card-img-top" alt="@equipment.Name"
                                          style="height: 200px; object-fit: cover;">
                                 }
                                 else

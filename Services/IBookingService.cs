@@ -14,6 +14,7 @@ namespace EquipShare.Services
         bool UpdateBookingStatus(int bookingId, string status, int ownerId);
         bool IsEquipmentAvailable(int equipmentId, DateTime startDate, DateTime endDate);
         decimal CalculateTotalPrice(int equipmentId, DateTime startDate, DateTime endDate);
+        (decimal EquipmentCost, decimal PlatformCost, decimal OwnerReceivableAmount, decimal TotalPrice) CalculatePriceBreakdown(int equipmentId, DateTime startDate, DateTime endDate);
         List<object> GetBookedDates(int equipmentId);
     }
 }

@@ -19,10 +19,10 @@ namespace EquipShare.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(int equipmentId, DateTime? startDate, DateTime? endDate)
+        public IActionResult Create(int equipmentId, DateTime? startDate, DateTime? endDate, int? selectedBookingType, DateTime? oneDayBookingDate)
         {
             // Debug logging
-            Console.WriteLine($"BookingController.Create called with equipmentId: {equipmentId}");
+            Console.WriteLine($"BookingController.Create called with equipmentId: {equipmentId}, selectedBookingType: {selectedBookingType}");
 
             var equipment = _equipmentService.GetEquipmentById(equipmentId);
             if (equipment == null)
@@ -31,17 +31,65 @@ namespace EquipShare.Controllers
                 return NotFound();
             }
 
+            // Check if user is trying to book their own equipment
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId.HasValue && equipment.OwnerId == userId.Value)
+            {
+                TempData["ErrorMessage"] = "You cannot book your own equipment.";
+                return RedirectToAction("Details", "Equipment", new { id = equipmentId });
+            }
+
             var model = new BookingCreateModel
             {
-                EquipmentId = equipmentId,
-                SelectedBookingType = BookingType.OneDay,
-                OneDayBookingDate = startDate ?? DateTime.Today,
-                StartDate = startDate ?? DateTime.Today,
-                EndDate = (startDate ?? DateTime.Today).AddDays(1).AddTicks(-1) // End of the selected day
+                EquipmentId = equipmentId
             };
 
-            // Calculate initial total
-            model.TotalPrice = _bookingService.CalculateTotalPrice(equipmentId, model.StartDate.Value, model.EndDate.Value);
+            // Check if we have preserved form data from a previous POST (validation errors)
+            if (TempData["PreservedBookingType"] != null)
+            {
+                model.SelectedBookingType = (BookingType)TempData["PreservedBookingType"];
+                model.OneDayBookingDate = TempData["PreservedOneDayBookingDate"] as DateTime?;
+                model.StartDate = TempData["PreservedStartDate"] as DateTime?;
+                model.EndDate = TempData["PreservedEndDate"] as DateTime?;
+            }
+            else
+            {
+                // Use parameters from equipment details page or defaults
+                if (selectedBookingType.HasValue)
+                {
+                    model.SelectedBookingType = (BookingType)selectedBookingType.Value;
+
+                    if (model.SelectedBookingType == BookingType.OneDay && oneDayBookingDate.HasValue)
+                    {
+                        model.OneDayBookingDate = oneDayBookingDate.Value;
+                        model.StartDate = oneDayBookingDate.Value;
+                        model.EndDate = oneDayBookingDate.Value.AddDays(1).AddTicks(-1);
+                    }
+                    else if (model.SelectedBookingType == BookingType.MultipleDay)
+                    {
+                        model.StartDate = startDate ?? DateTime.Today;
+                        model.EndDate = endDate ?? (startDate ?? DateTime.Today).AddDays(1).AddTicks(-1);
+                    }
+                }
+                else
+                {
+                    // Default values when no parameters provided
+                    model.SelectedBookingType = BookingType.OneDay;
+                    model.OneDayBookingDate = startDate ?? DateTime.Today;
+                    model.StartDate = startDate ?? DateTime.Today;
+                    model.EndDate = (startDate ?? DateTime.Today).AddDays(1).AddTicks(-1);
+                }
+            }
+
+            // Calculate initial total and price breakdown (only if dates are not null)
+            if (model.StartDate.HasValue && model.EndDate.HasValue)
+            {
+                var priceBreakdown = _bookingService.CalculatePriceBreakdown(equipmentId, model.StartDate.Value, model.EndDate.Value);
+                model.TotalPrice = priceBreakdown.TotalPrice;
+                model.EquipmentCost = priceBreakdown.EquipmentCost;
+                model.PlatformCost = priceBreakdown.PlatformCost;
+                model.OwnerReceivableAmount = priceBreakdown.OwnerReceivableAmount;
+            }
 
             ViewBag.EquipmentName = equipment.Name;
             ViewBag.PricePerDay = equipment.PricePerDay;
@@ -59,6 +107,12 @@ namespace EquipShare.Controllers
 
             if (ModelState.IsValid)
             {
+                // Clear preserved data on successful validation
+                TempData.Remove("PreservedBookingType");
+                TempData.Remove("PreservedOneDayBookingDate");
+                TempData.Remove("PreservedStartDate");
+                TempData.Remove("PreservedEndDate");
+
                 // Validate based on booking type
                 DateTime startDate, endDate;
                 if (model.SelectedBookingType == BookingType.OneDay)
@@ -87,6 +141,9 @@ namespace EquipShare.Controllers
                 {
                     ModelState.AddModelError("", "This equipment is not available for the selected dates.");
 
+                    // Preserve user's selections in TempData
+                    PreserveFormData(model);
+
                     // Reload equipment details for the view
                     var equipment = _equipmentService.GetEquipmentById(model.EquipmentId);
                     ViewBag.EquipmentName = equipment.Name;
@@ -96,8 +153,12 @@ namespace EquipShare.Controllers
                     return View(model);
                 }
 
-                // Calculate total price
-                model.TotalPrice = _bookingService.CalculateTotalPrice(model.EquipmentId, startDate, endDate);
+                // Calculate total price and price breakdown
+                var priceBreakdown = _bookingService.CalculatePriceBreakdown(model.EquipmentId, startDate, endDate);
+                model.TotalPrice = priceBreakdown.TotalPrice;
+                model.EquipmentCost = priceBreakdown.EquipmentCost;
+                model.PlatformCost = priceBreakdown.PlatformCost;
+                model.OwnerReceivableAmount = priceBreakdown.OwnerReceivableAmount;
 
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (!userId.HasValue)
@@ -113,6 +174,9 @@ namespace EquipShare.Controllers
                 catch (ArgumentException ex)
                 {
                     ModelState.AddModelError("", ex.Message);
+
+                    // Preserve user's selections in TempData
+                    PreserveFormData(model);
 
                     // Reload equipment details for the view
                     var equipment = _equipmentService.GetEquipmentById(model.EquipmentId);
@@ -134,7 +198,17 @@ namespace EquipShare.Controllers
                 }
             }
 
+            // If ModelState is invalid, preserve the form data
+            PreserveFormData(model);
             return View(model);
+        }
+
+        private void PreserveFormData(BookingCreateModel model)
+        {
+            TempData["PreservedBookingType"] = (int)model.SelectedBookingType;
+            TempData["PreservedOneDayBookingDate"] = model.OneDayBookingDate;
+            TempData["PreservedStartDate"] = model.StartDate;
+            TempData["PreservedEndDate"] = model.EndDate;
         }
 
         public IActionResult Details(int id)

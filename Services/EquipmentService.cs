@@ -121,5 +121,41 @@ namespace EquipShare.Services
             return equipmentQuery.OrderByDescending(e => e.CreatedDate).ToList();
         }
 
+        public List<Equipment> SearchAndSortEquipment(string query, int? categoryId, string sortBy)
+        {
+            var equipmentQuery = _context.Equipment
+                .Include(e => e.Category)
+                .Include(e => e.Owner)
+                .Where(e => e.IsAvailable);
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                equipmentQuery = equipmentQuery.Where(e =>
+                    e.Name.Contains(query) || e.Description.Contains(query));
+            }
+
+            if (categoryId.HasValue)
+            {
+                equipmentQuery = equipmentQuery.Where(e => e.CategoryId == categoryId.Value);
+            }
+
+            // Apply sorting
+            switch (sortBy)
+            {
+                case "priceLow":
+                    equipmentQuery = equipmentQuery.OrderBy(e => e.PricePerDay);
+                    break;
+                case "priceHigh":
+                    equipmentQuery = equipmentQuery.OrderByDescending(e => e.PricePerDay);
+                    break;
+                case "recent":
+                default:
+                    equipmentQuery = equipmentQuery.OrderByDescending(e => e.CreatedDate);
+                    break;
+            }
+
+            return equipmentQuery.ToList();
+        }
+
     }
 }

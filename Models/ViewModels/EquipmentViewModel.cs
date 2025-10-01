@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace EquipShare.Models.ViewModels
 {
@@ -29,9 +31,12 @@ namespace EquipShare.Models.ViewModels
         [MaxLength(500)]
         public string Location { get; set; }
 
-        [Display(Name = "Equipment Image")]
-        public IFormFile ImageFile { get; set; }
+        [Display(Name = "Equipment Images")]
+        public List<IFormFile> ImageFiles { get; set; } = new List<IFormFile>();
 
         public string ImageUrl { get; set; }
+
+        // Helper property to check if new images are being uploaded
+        public bool HasNewImages => ImageFiles != null && ImageFiles.Any(f => f != null);
     }
 }

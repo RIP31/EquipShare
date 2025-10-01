@@ -13,5 +13,6 @@ namespace EquipShare.Services
         Equipment UpdateEquipment(EquipmentViewModel model, int ownerId, string imagePath);
         bool DeleteEquipment(int id, int ownerId);
         List<Equipment> SearchEquipment(string query, int? categoryId);
+        List<Equipment> SearchAndSortEquipment(string query, int? categoryId, string sortBy);
     }
 }

@@ -19,7 +19,7 @@ namespace EquipShare.Controllers
             var featuredEquipment = _context.Equipment
                 .Where(e => e.IsAvailable)
                 .OrderByDescending(e => e.CreatedDate)
-                .Take(6)
+                .Take(3)
                 .ToList();
 
             return View(featuredEquipment);

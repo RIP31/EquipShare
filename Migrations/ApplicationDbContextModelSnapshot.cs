@@ -35,6 +35,12 @@ namespace EquipShare.Migrations
                     b.Property<int>("EquipmentId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("OwnerReceivableAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PlatformCost")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("RenterId")
                         .HasColumnType("int");
 
@@ -82,26 +88,50 @@ namespace EquipShare.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Construction equipment and tools",
-                            Name = "Construction"
+                            Description = "Construction equipment and tools for building and renovation",
+                            Name = "Construction & Tools"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Audio and visual equipment",
-                            Name = "Audio/Visual"
+                            Description = "Outdoor equipment, gardening tools, and landscaping supplies",
+                            Name = "Outdoor & Gardening"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Equipment for parties and events",
-                            Name = "Party & Events"
+                            Description = "Vehicles, trailers, and transportation equipment",
+                            Name = "Vehicles & Transport"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Various tools for different purposes",
-                            Name = "Tools"
+                            Description = "Electronic devices, computers, and technology equipment",
+                            Name = "Electronics & Tech"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Equipment and supplies for events, parties, and celebrations",
+                            Name = "Events & Party Supplies"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Sports equipment and recreational gear",
+                            Name = "Sports & Recreation"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Agricultural machinery and farming equipment",
+                            Name = "Agriculture & Farming"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Other equipment and tools that don't fit into specific categories",
+                            Name = "Miscellaneous"
                         });
                 });
 
@@ -153,7 +183,6 @@ namespace EquipShare.Migrations
                     b.ToTable("Equipment");
                 });
 
-
             modelBuilder.Entity("EquipShare.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -184,11 +213,6 @@ namespace EquipShare.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
@@ -229,7 +253,6 @@ namespace EquipShare.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
-
 #pragma warning restore 612, 618
         }
     }

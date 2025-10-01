@@ -37,8 +37,18 @@
                         <div class="position-relative">
                             @if (!string.IsNullOrEmpty(equipment.ImageUrl))
                             {
-                                <img src="@equipment.ImageUrl" class="card-img-top" alt="@equipment.Name"
+                                var equipmentImageUrls = equipment.ImageUrl.Split('|').Where(url => !string.IsNullOrEmpty(url)).ToList();
+                                var firstImageUrl = equipmentImageUrls.Any() ? equipmentImageUrls.First() : equipment.ImageUrl;
+                                <img src="@firstImageUrl" class="card-img-top" alt="@equipment.Name"
                                      style="height: 200px; object-fit: cover;">
+                                @if (equipmentImageUrls.Count > 1)
+                                {
+                                    <div class="position-absolute bottom-0 end-0 m-2">
+                                        <span class="badge bg-dark">
+                                            <i class="bi bi-images me-1"></i>@equipmentImageUrls.Count
+                                        </span>
+                                    </div>
+                                }
                             }
                             else
                             {

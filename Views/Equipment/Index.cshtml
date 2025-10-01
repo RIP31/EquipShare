@@ -8,29 +8,30 @@
     <!-- Search and Filter Section -->
     <div class="card shadow-sm mb-4 border-0">
         <div class="card-body">
-            <form method="get" class="row g-3 align-items-end">
-                <div class="col-lg-6 col-md-12">
+            <form method="get" class="row g-2 align-items-end">
+                <div class="col-lg-5 col-md-12">
                     <label class="form-label fw-semibold">Search</label>
-                    <input type="text" name="search" class="form-control form-control-lg"
+                    <input type="text" name="search" class="form-control"
                            placeholder="Search equipment by name or description..."
                            value="@ViewBag.SearchQuery">
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <label class="form-label fw-semibold">Category</label>
-                    <select name="categoryId" class="form-select form-select-lg">
+                    <select name="categoryId" class="form-select">
                         <option value="">All Categories</option>
-                        <option value="1" selected="@(ViewBag.CategoryId == 1)">Construction</option>
-                        <option value="2" selected="@(ViewBag.CategoryId == 2)">Audio/Visual</option>
-                        <option value="3" selected="@(ViewBag.CategoryId == 3)">Party & Events</option>
-                        <option value="4" selected="@(ViewBag.CategoryId == 4)">Tools</option>
+                        <option value="1" selected="@(ViewBag.CategoryId == 1)">Construction & Tools</option>
+                        <option value="2" selected="@(ViewBag.CategoryId == 2)">Outdoor & Gardening</option>
+                        <option value="4" selected="@(ViewBag.CategoryId == 4)">Electronics & Tech</option>
+                        <option value="5" selected="@(ViewBag.CategoryId == 5)">Events & Party Supplies</option>
+                        <option value="8" selected="@(ViewBag.CategoryId == 8)">Miscellaneous</option>
                     </select>
                 </div>
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <label class="form-label fw-semibold">Sort By</label>
-                    <select name="sort" class="form-select form-select-lg">
-                        <option value="recent">Most Recent</option>
-                        <option value="priceLow">Price: Low to High</option>
-                        <option value="priceHigh">Price: High to Low</option>
+                    <select name="sort" class="form-select">
+                        <option value="recent" selected="@(ViewBag.SortBy == null || ViewBag.SortBy == "recent")">Most Recent</option>
+                        <option value="priceLow" selected="@(ViewBag.SortBy == "priceLow")">Price: Low to High</option>
+                        <option value="priceHigh" selected="@(ViewBag.SortBy == "priceHigh")">Price: High to Low</option>
                     </select>
                 </div>
                 <div class="col-lg-1 col-md-12">
@@ -65,8 +66,18 @@
                         <div class="position-relative">
                             @if (!string.IsNullOrEmpty(equipment.ImageUrl))
                             {
-                                <img src="@equipment.ImageUrl" class="card-img-top rounded-top" alt="@equipment.Name"
+                                var browseImageUrls = equipment.ImageUrl.Split('|').Where(url => !string.IsNullOrEmpty(url)).ToList();
+                                var browseFirstImage = browseImageUrls.Any() ? browseImageUrls.First() : equipment.ImageUrl;
+                                <img src="@browseFirstImage" class="card-img-top rounded-top" alt="@equipment.Name"
                                      style="height: 220px; object-fit: cover;">
+                                @if (browseImageUrls.Count > 1)
+                                {
+                                    <div class="position-absolute bottom-0 end-0 m-2">
+                                        <span class="badge bg-dark">
+                                            <i class="bi bi-images me-1"></i>@browseImageUrls.Count
+                                        </span>
+                                    </div>
+                                }
                             }
                             else
                             {
