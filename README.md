@@ -238,7 +238,7 @@ This project is developed for educational and portfolio purposes.
 For questions or support regarding this project, please contact:
 - **Developer**: Ridham Patel
 - **LinkedIn**: https://www.linkedin.com/in/ridham-patel-853072275/
-- **Email**: [Your email address]
+- **Email**: ridhampately@gmail.com
 
 ---
 
