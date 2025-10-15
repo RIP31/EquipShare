@@ -1,58 +1,57 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\",
+  "WorkspaceRootPath": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\models\\viewmodels\\bookingcreatemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\models\\viewmodels\\bookingcreatemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\models\\viewmodels\\equipmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:models\\viewmodels\\equipmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\services\\equipmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\services\\equipmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\services\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\services\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\views\\booking\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\views\\booking\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\services\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\services\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\views\\home\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:views\\home\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\views\\equipment\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:views\\equipment\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\models\\viewmodels\\bookingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\models\\viewmodels\\bookingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\views\\equipment\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:views\\equipment\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\utilities\\passwordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\utilities\\passwordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\views\\equipment\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\views\\equipment\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91902F2C-B685-ABAF-DF30-54F9F0EB9103}|EquipShare.csproj|solutionrelative:startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|d:\\ridham\\ddu\\projects\\dot-net-project\\equipshare\\equipshare\\wwwroot\\js\\equipment.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{9D24DF6A-9B77-42BD-9CF0-6D33DA4FB5DE}|EquipShare\\EquipShare.csproj|solutionrelative:equipshare\\wwwroot\\js\\equipment.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.EolTargetFrameworks.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,7 +61,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -86,160 +85,159 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Booking\\Create.cshtml",
-              "RelativeDocumentMoniker": "EquipShare\\Views\\Booking\\Create.cshtml",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Booking\\Create.cshtml",
-              "RelativeToolTip": "EquipShare\\Views\\Booking\\Create.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-20T11:15:51.029Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BookingCreateModel.cs",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Models\\ViewModels\\BookingCreateModel.cs",
-              "RelativeDocumentMoniker": "EquipShare\\Models\\ViewModels\\BookingCreateModel.cs",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Models\\ViewModels\\BookingCreateModel.cs*",
-              "RelativeToolTip": "EquipShare\\Models\\ViewModels\\BookingCreateModel.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAwAAAAAAAAAA==",
+              "Title": "EquipmentViewModel.cs",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Models\\ViewModels\\EquipmentViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\ViewModels\\EquipmentViewModel.cs",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Models\\ViewModels\\EquipmentViewModel.cs",
+              "RelativeToolTip": "Models\\ViewModels\\EquipmentViewModel.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAIwCkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T11:13:46.637Z",
+              "WhenOpened": "2025-10-01T14:43:13.002Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "BookingViewModel.cs",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Models\\ViewModels\\BookingViewModel.cs",
-              "RelativeDocumentMoniker": "EquipShare\\Models\\ViewModels\\BookingViewModel.cs",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Models\\ViewModels\\BookingViewModel.cs",
-              "RelativeToolTip": "EquipShare\\Models\\ViewModels\\BookingViewModel.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAA1wA8AAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T11:13:23.379Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Startup.cs",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Startup.cs",
-              "RelativeDocumentMoniker": "EquipShare\\Startup.cs",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Startup.cs",
-              "RelativeToolTip": "EquipShare\\Startup.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAIwD0AAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T11:12:47.632Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PasswordHasher.cs",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Utilities\\PasswordHasher.cs",
-              "RelativeDocumentMoniker": "EquipShare\\Utilities\\PasswordHasher.cs",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Utilities\\PasswordHasher.cs",
-              "RelativeToolTip": "EquipShare\\Utilities\\PasswordHasher.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T11:12:11.104Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "IBookingService.cs",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Services\\IBookingService.cs",
-              "RelativeDocumentMoniker": "EquipShare\\Services\\IBookingService.cs",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Services\\IBookingService.cs",
-              "RelativeToolTip": "EquipShare\\Services\\IBookingService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T11:09:04.512Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BookingController.cs",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Controllers\\BookingController.cs",
-              "RelativeDocumentMoniker": "EquipShare\\Controllers\\BookingController.cs",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Controllers\\BookingController.cs",
-              "RelativeToolTip": "EquipShare\\Controllers\\BookingController.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAgwHMAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T11:05:10.903Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EquipmentService.cs",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Services\\EquipmentService.cs",
-              "RelativeDocumentMoniker": "EquipShare\\Services\\EquipmentService.cs",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Services\\EquipmentService.cs",
-              "RelativeToolTip": "EquipShare\\Services\\EquipmentService.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAiwHoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T11:04:39.912Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BookingService.cs",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Services\\BookingService.cs",
-              "RelativeDocumentMoniker": "EquipShare\\Services\\BookingService.cs",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Services\\BookingService.cs",
-              "RelativeToolTip": "EquipShare\\Services\\BookingService.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAAAFUAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T11:03:57.939Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "EquipShare\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "EquipShare\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAFAAAAAAAAAAAAAiwGQAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T11:02:41.445Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Equipment\\Details.cshtml",
-              "RelativeDocumentMoniker": "EquipShare\\Views\\Equipment\\Details.cshtml",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Equipment\\Details.cshtml",
-              "RelativeToolTip": "EquipShare\\Views\\Equipment\\Details.cshtml",
-              "ViewState": "AgIAAGcAAAAAAAAAAAAiwHMAAAAhAAAAAAAAAA==",
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Register.cshtml",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Account\\Register.cshtml",
+              "RelativeToolTip": "Views\\Account\\Register.cshtml",
+              "ViewState": "AgIAACoAAAAAAAAAAAAswEsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-20T11:01:03.691Z"
+              "WhenOpened": "2025-09-22T17:00:55.593Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-22T17:00:40.963Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "site.css",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\wwwroot\\css\\site.css",
-              "RelativeDocumentMoniker": "EquipShare\\wwwroot\\css\\site.css",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\wwwroot\\css\\site.css",
-              "RelativeToolTip": "EquipShare\\wwwroot\\css\\site.css",
-              "ViewState": "AgIAAJwAAAAAAAAAAAAmwKsAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-09-20T10:59:15.618Z"
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Equipment\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Equipment\\Details.cshtml",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Equipment\\Details.cshtml",
+              "RelativeToolTip": "Views\\Equipment\\Details.cshtml",
+              "ViewState": "AgIAAN4AAAAAAAAAAAAswOgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-22T16:55:03.345Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Equipment\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Equipment\\Index.cshtml",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Equipment\\Index.cshtml",
+              "RelativeToolTip": "Views\\Equipment\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-22T16:53:37.501Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "equipment.js",
-              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\wwwroot\\js\\equipment.js",
-              "RelativeDocumentMoniker": "EquipShare\\wwwroot\\js\\equipment.js",
-              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\wwwroot\\js\\equipment.js",
-              "RelativeToolTip": "EquipShare\\wwwroot\\js\\equipment.js",
-              "ViewState": "AgIAAIsAAAAAAAAAAAAgwPkAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-09-20T10:57:06.297Z"
+              "Title": "Microsoft.NET.EolTargetFrameworks.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.EolTargetFrameworks.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.301\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.EolTargetFrameworks.targets",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAkwB8AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-09-22T16:31:54.133Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "About.cshtml",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Home\\About.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\About.cshtml",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Home\\About.cshtml",
+              "RelativeToolTip": "Views\\Home\\About.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-22T16:30:57.404Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAswGAAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-22T16:24:47.729Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "site.css",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-09-22T16:24:06.254Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADgAAAAAAAAAAAAswEcAAABeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-22T16:23:27.31Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-21T11:56:32.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-21T11:56:07.166Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Startup.cs",
+              "DocumentMoniker": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Startup.cs",
+              "RelativeDocumentMoniker": "Startup.cs",
+              "ToolTip": "D:\\ridham\\DDU\\Projects\\Dot-net-Project\\EquipShare\\EquipShare\\Startup.cs",
+              "RelativeToolTip": "Startup.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBIAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-21T11:56:03.753Z"
             }
           ]
         }

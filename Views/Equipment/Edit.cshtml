@@ -1,0 +1,189 @@
+@model EquipShare.Models.ViewModels.EquipmentViewModel
+
+@{
+    ViewData["Title"] = "Edit Equipment";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="bi bi-pencil-square"></i> Edit Equipment
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Name" class="form-label">Equipment Name *</label>
+                                <input asp-for="Name" class="form-control" placeholder="Enter equipment name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CategoryId" class="form-label">Category *</label>
+                                <select asp-for="CategoryId" class="form-select">
+                                    <option value="">Select a category</option>
+                                    <option value="1">Construction & Tools</option>
+                                    <option value="2">Outdoor & Gardening</option>
+                                    <option value="3">Vehicles & Transport</option>
+                                    <option value="4">Electronics & Tech</option>
+                                    <option value="5">Events & Party Supplies</option>
+                                    <option value="6">Sports & Recreation</option>
+                                    <option value="7">Agriculture & Farming</option>
+                                    <option value="8">Miscellaneous</option>
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="4"
+                                      placeholder="Describe your equipment, its condition, and any special instructions..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PricePerDay" class="form-label">Price Per Day *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₹</span>
+                                    <input asp-for="PricePerDay" class="form-control" type="number" step="0.01" min="0.01" max="10000" />
+                                </div>
+                                <span asp-validation-for="PricePerDay" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Location" class="form-label">Location</label>
+                                <input asp-for="Location" class="form-control" placeholder="City, Area" />
+                                <span asp-validation-for="Location" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        @section Scripts {
+                            <script>
+                                // Image preview functionality for multiple files (Edit form)
+                                document.querySelector('input[name="ImageFiles"]').addEventListener('change', function(e) {
+                                    const files = e.target.files;
+                                    const previewContainer = document.getElementById('previewContainer');
+                                    const previewArea = document.getElementById('imagePreview');
+                        
+                                    // Clear previous previews
+                                    previewContainer.innerHTML = '';
+                        
+                                    if (files.length > 0) {
+                                        previewArea.style.display = 'block';
+                        
+                                        // Limit to 5 images
+                                        const maxFiles = Math.min(files.length, 5);
+                        
+                                        for (let i = 0; i < maxFiles; i++) {
+                                            const file = files[i];
+                        
+                                            // Validate file type
+                                            if (file.type.startsWith('image/')) {
+                                                const reader = new FileReader();
+                        
+                                                reader.onload = function(e) {
+                                                    const previewDiv = document.createElement('div');
+                                                    previewDiv.className = 'image-preview-item';
+                                                    previewDiv.innerHTML = `
+                                                        <img src="${e.target.result}" alt="Preview ${i + 1}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;">
+                                                        <small class="d-block text-center mt-1">${file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name}</small>
+                                                    `;
+                                                    previewContainer.appendChild(previewDiv);
+                                                };
+                        
+                                                reader.readAsDataURL(file);
+                                            }
+                                        }
+                        
+                                        // Show warning if more than 5 files selected
+                                        if (files.length > 5) {
+                                            const warningDiv = document.createElement('div');
+                                            warningDiv.className = 'alert alert-warning mt-2';
+                                            warningDiv.innerHTML = '<small><i class="bi bi-exclamation-triangle me-1"></i>Only the first 5 images will be uploaded.</small>';
+                                            previewArea.appendChild(warningDiv);
+                                        }
+                                    } else {
+                                        previewArea.style.display = 'none';
+                                    }
+                                });
+                            </script>
+                        
+                            <style>
+                                .image-preview-item {
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    margin-bottom: 10px;
+                                }
+                            </style>
+                        }
+
+                        <!-- Current Image Display -->
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Current Images</label>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="@Model.ImageUrl" alt="Current equipment image"
+                                         style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                                    <div class="form-text">
+                                        <small class="text-muted">Leave the images field empty to keep current images.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="mb-3">
+                            <label class="form-label">Add/Update Images (Optional)</label>
+                            <input type="file" class="form-control" name="ImageFiles" multiple accept="image/*" />
+                            <div class="form-text">
+                                <small class="text-muted">
+                                    You can select multiple images. Accepted formats: JPG, JPEG, PNG, GIF. Maximum 5 images, 5MB each.<br>
+                                    Upload new images to replace or add to the current ones.
+                                </small>
+                            </div>
+                        </div>
+
+                        <!-- New Image Preview Area -->
+                        <div id="imagePreview" class="mb-3" style="display: none;">
+                            <label class="form-label">New Images Selected:</label>
+                            <div id="previewContainer" class="d-flex gap-2 flex-wrap">
+                                <!-- Image previews will be added here by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i>
+                            <strong>Update Guidelines:</strong>
+                            <ul class="mb-0 mt-2">
+                                <li>Only change fields that need updating</li>
+                                <li>Ensure your equipment is still in good working condition</li>
+                                <li>Update photos if the equipment's appearance has changed</li>
+                                <li>Review and update pricing if market rates have changed</li>
+                            </ul>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check2"></i> Update Equipment
+                            </button>
+                            <a asp-controller="Equipment" asp-action="MyEquipment" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to My Equipment
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

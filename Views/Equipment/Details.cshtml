@@ -1,0 +1,328 @@
+﻿@model EquipShare.Models.Equipment
+@{
+    ViewData["Title"] = Model.Name;
+
+    // Handle multiple images (split by pipe delimiter)
+    var imageUrls = !string.IsNullOrEmpty(Model.ImageUrl)
+        ? Model.ImageUrl.Split('|').Where(url => !string.IsNullOrEmpty(url)).ToList()
+        : new List<string>();
+    var mainImageUrl = imageUrls.Any() ? imageUrls.First() : "/images/no-image.png";
+}
+
+<div class="container py-5">
+    <!-- Error Message Display -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row g-4">
+        <!-- Left Side: Gallery + Details -->
+        <div class="col-lg-8">
+            <!-- Image Gallery -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <div class="equipment-gallery mb-3">
+                        <img id="main-gallery-image" src="@mainImageUrl" alt="@Model.Name"
+                             class="img-fluid rounded-3 w-100"
+                             style="max-height: 450px; object-fit: cover;">
+                    </div>
+                    @if (imageUrls.Count > 1)
+                    {
+                        <div class="d-flex gap-2 flex-wrap">
+                            @foreach (var imageUrl in imageUrls)
+                            {
+                                <img src="@imageUrl" class="gallery-thumbnail rounded"
+                                     style="width: 90px; height: 90px; object-fit: cover; cursor: pointer;"
+                                     onclick="changeMainImage('@imageUrl')" alt="Equipment image">
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Equipment Details -->
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h2 class="fw-bold">@Model.Name</h2>
+                        <span class="badge px-3 py-2 rounded-pill @(Model.IsAvailable ? "bg-gradient" : "bg-danger")">
+                            @(Model.IsAvailable ? "Available" : "Unavailable")
+                        </span>
+                    </div>
+
+                    <h4 class="text-gradient mb-3">₹@Model.PricePerDay.ToString("F2") / day</h4>
+
+                    <p class="text-muted">@Model.Description</p>
+
+                    <hr />
+
+                    <!-- Specs Grid -->
+                    <div class="row g-3">
+                        <div class="col-md-6 d-flex align-items-center">
+                            <i class="bi bi-grid fs-4 text-gradient me-2"></i>
+                            <span>@Model.Category.Name</span>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-center">
+                            <i class="bi bi-person fs-4 text-gradient me-2"></i>
+                            <span>Owner: @Model.Owner.FirstName @Model.Owner.LastName</span>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-center">
+                            <i class="bi bi-geo-alt fs-4 text-gradient me-2"></i>
+                            <span>@Model.Location</span>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-center">
+                            <i class="bi bi-calendar fs-4 text-gradient me-2"></i>
+                            <span>Listed on @Model.CreatedDate.ToString("MMM dd, yyyy")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Booking + Owner -->
+        <div class="col-lg-4">
+            <div class="sticky-top" style="top: 100px;">
+                <!-- Booking Card -->
+                @if (Model.OwnerId != ViewBag.CurrentUserId)
+                {
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">Book This Equipment</h5>
+                        <form asp-controller="Booking" asp-action="Create" method="get" onsubmit="return validateBookingForm();">
+                            <input type="hidden" name="equipmentId" value="@Model.Id" id="equipmentIdInput">
+
+                            <!-- Booking Type Selection -->
+                            <div class="mb-3">
+                                <label class="form-label">Booking Type</label>
+                                <select name="selectedBookingType" class="form-select" id="bookingTypeSelect" onchange="toggleBookingOptions()">
+                                    <option value="1">One Day Booking</option>
+                                    <option value="2">Multiple Days Booking</option>
+                                </select>
+                                <small class="form-text text-muted">
+                                    <i class="bi bi-info-circle"></i> Choose your preferred booking duration
+                                </small>
+                            </div>
+
+                            <!-- One Day Booking Option -->
+                            <div id="oneDayBooking" class="mb-3">
+                                <label class="form-label">Select Date</label>
+                                <input type="date" name="oneDayBookingDate" class="form-control"
+                                       min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                       onchange="updatePriceSummary()">
+                                <small class="form-text text-muted">
+                                    <i class="bi bi-calendar-day"></i> Full day rental
+                                </small>
+                            </div>
+
+                            <!-- Multiple Days Booking Option -->
+                            <div id="multipleDayBooking" class="mb-3" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <label class="form-label">Start Date</label>
+                                        <input type="date" name="startDate" class="form-control"
+                                               min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                               onchange="updatePriceSummary()">
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label class="form-label">End Date</label>
+                                        <input type="date" name="endDate" class="form-control"
+                                               min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                               onchange="updatePriceSummary()">
+                                    </div>
+                                </div>
+                                <small class="form-text text-muted">
+                                    <i class="bi bi-calendar-range"></i> Select your rental period
+                                </small>
+                            </div>
+
+                            <!-- Price Summary -->
+                            <div class="alert alert-info d-none" id="priceSummary">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span id="priceLabel">Total Price:</span>
+                                    <strong id="totalPrice">₹@Model.PricePerDay.ToString("F2")</strong>
+                                </div>
+                                <small class="text-muted" id="durationText">1 day rental</small>
+                            </div>
+
+                            <button type="submit" class="btn btn-gradient w-100"
+                                    @(Model.IsAvailable ? "" : "disabled")>
+                                @(Model.IsAvailable ? "Book Now" : "Not Available")
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                }
+
+                <!-- Owner Card -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h6 class="fw-bold mb-3">
+                            <i class="bi bi-person me-2"></i>Owner Information
+                        </h6>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold"
+                                  style="width: 50px; height: 50px;">
+                                @Model.Owner.FirstName[0]@Model.Owner.LastName[0]
+                            </div>
+                            <div>
+                                <strong>@Model.Owner.FirstName @Model.Owner.LastName</strong>
+                                <br />
+                                <small class="text-muted">Member since @Model.Owner.CreatedDate.ToString("yyyy")</small>
+                            </div>
+                        </div>
+
+                        <!-- Owner Contact Details -->
+                        <div class="mb-3">
+                            <div class="row g-2">
+                                @if (!string.IsNullOrEmpty(Model.Owner.PhoneNumber))
+                                {
+                                    <div class="col-12">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-telephone text-primary me-2"></i>
+                                            <span>@Model.Owner.PhoneNumber</span>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-geo-alt text-primary me-2"></i>
+                                        <span>@Model.Location</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Simple Contact Info -->
+                        <div class="alert alert-info">
+                            <small>
+                                <i class="bi bi-info-circle me-1"></i>
+                                Contact the owner directly using the phone number above or visit their listed location to coordinate the rental.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/equipment.js"></script>
+    <script>
+        // Toggle between booking options
+        function toggleBookingOptions() {
+            const bookingType = document.getElementById("bookingTypeSelect").value;
+            const oneDaySection = document.getElementById("oneDayBooking");
+            const multipleDaySection = document.getElementById("multipleDayBooking");
+
+            if (bookingType === "1") { // One Day
+                oneDaySection.style.display = "block";
+                multipleDaySection.style.display = "none";
+            } else { // Multiple Days
+                oneDaySection.style.display = "none";
+                multipleDaySection.style.display = "block";
+            }
+
+            updatePriceSummary();
+        }
+
+        // Update price calculation based on booking type
+        function updatePriceSummary() {
+            const bookingType = document.getElementById("bookingTypeSelect").value;
+            const pricePerDay = @Model.PricePerDay;
+            const summary = document.getElementById("priceSummary");
+            const priceLabel = document.getElementById("priceLabel");
+            const totalPrice = document.getElementById("totalPrice");
+            const durationText = document.getElementById("durationText");
+
+            if (bookingType === "1") { // One Day
+                const selectedDate = document.querySelector('input[name="oneDayBookingDate"]').value;
+                if (selectedDate) {
+                    summary.classList.remove("d-none");
+                    priceLabel.textContent = "Total Price:";
+                    totalPrice.textContent = `₹${pricePerDay.toFixed(2)}`;
+                    durationText.textContent = "1 day rental";
+                } else {
+                    summary.classList.add("d-none");
+                }
+            } else { // Multiple Days
+                const startDate = document.querySelector('input[name="startDate"]').value;
+                const endDate = document.querySelector('input[name="endDate"]').value;
+
+                if (startDate && endDate && startDate <= endDate) {
+                    const days = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
+                    const total = days * pricePerDay;
+
+                    summary.classList.remove("d-none");
+                    priceLabel.textContent = `Total Price (${days} day${days > 1 ? 's' : ''}):`;
+                    totalPrice.textContent = `₹${total.toFixed(2)}`;
+                    durationText.textContent = `${startDate} to ${endDate}`;
+                } else {
+                    summary.classList.add("d-none");
+                }
+            }
+        }
+
+        // Initialize on page load
+        toggleBookingOptions();
+
+        // Image gallery functionality
+        function changeMainImage(imageUrl) {
+            document.getElementById('main-gallery-image').src = imageUrl;
+
+            // Update active thumbnail
+            document.querySelectorAll('.gallery-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+    </script>
+}
+
+<style>
+    .bg-gradient {
+        background: linear-gradient(90deg, #4f46e5, #06b6d4);
+    }
+
+    .text-gradient {
+        background: linear-gradient(90deg, #4f46e5, #06b6d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .btn-gradient {
+        background: linear-gradient(90deg, #4f46e5, #06b6d4);
+        border: none;
+        color: #fff;
+    }
+
+        .btn-gradient:hover {
+            opacity: 0.9;
+        }
+
+    .btn-outline-gradient {
+        border: 2px solid transparent;
+        background-image: linear-gradient(#fff, #fff), linear-gradient(90deg, #4f46e5, #06b6d4);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        color: #4f46e5;
+    }
+
+        .btn-outline-gradient:hover {
+            background: linear-gradient(90deg, #4f46e5, #06b6d4);
+            color: #fff;
+        }
+
+    .gallery-thumbnail {
+        border: 2px solid transparent;
+    }
+
+        .gallery-thumbnail.active, .gallery-thumbnail:hover {
+            border: 2px solid #4f46e5;
+        }
+</style>
